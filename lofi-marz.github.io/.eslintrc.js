@@ -34,6 +34,5 @@ module.exports = {
             'always'
         ],
         "react/react-in-jsx-scope": "off",
-        "react/jsx-key":"off"
     }
 };

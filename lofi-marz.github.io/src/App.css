@@ -29,7 +29,6 @@ html, body {
 .container {
   width: 100%;
   height: 100%;
-  background-color: var(--main-bg-dark-color);
   color: white;
 }
 
@@ -51,18 +50,11 @@ html, body {
   height: 150px;
 }
 
-#name {
-  width: fit-content;
-  font-size: 35px;
-  font-weight: 700;
 
-  padding-left: 15px;
-
-}
 
 .icon-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;;
   align-content: center;
   justify-content: center;
   align-items: stretch;
@@ -70,13 +62,17 @@ html, body {
   padding: 0px 15px;
 }
 
-.social-icon {
-  padding: 5px 0px;
+.icon-container a {
+  padding: 5px 5px;
   color: white;
 }
 
 
+
 .title {
+  font-size: 35px;
+  font-weight: 700;
+
   height: fit-content;
   width: fit-content;
   font-family: 'Lato', sans-serif;
@@ -86,5 +82,23 @@ html, body {
   color: var(--main-color);
 }
 
+
+.react-p5 {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+  background-color: var(--main-bg-dark-color);
+}
+
+.react-p5 canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 
 
