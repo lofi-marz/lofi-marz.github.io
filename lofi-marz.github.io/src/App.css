@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&display=swap');
 
 :root {
-  --main-red: rgba(150, 44, 20);
+
+  --main-red: #c92a2a;
   --light-red: #cc6666;
-  --main-color: var(--main-red);
-  --main-bg-dark-color: rgb(19, 18, 11);
+  --main-color: #087f5b;
+  --main-bg-dark-color: #212529;
+  --default-margin: 10px;
+
+  font-size: 62.5%;
 }
 
 body {
   background-color: var(--main-bg-dark-color);
 }
 
-#me {
-  width: 100px;
-  border-radius: 50%;
-}
 
 html, body {
   height: 100%;
@@ -50,6 +50,11 @@ html, body {
   height: 150px;
 }
 
+.me {
+  height: 100%;
+  border-radius: 50%;
+  margin: var(--default-margin);
+}
 
 
 .icon-container {
@@ -63,19 +68,23 @@ html, body {
 }
 
 .icon-container a {
+
   padding: 5px 5px;
   color: white;
 }
 
 
 
-.title {
-  font-size: 35px;
-  font-weight: 700;
 
+.title {
+
+  padding: var(--default-margin);
+  font-size: 10rem;
+  font-weight: 800;
   height: fit-content;
   width: fit-content;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Manrope', sans-serif;
+  margin: var(--default-margin);
 }
 
 .highlight {
@@ -84,11 +93,11 @@ html, body {
 
 
 .react-p5 {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height: 100vh;
+  width: 500px;
+  height: 500px;
+  border-radius: 5px;
+  border: 5px black;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,5 +109,23 @@ html, body {
   width: 100% !important;
   height: 100% !important;
 }
+
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.bracket {
+  animation: wiggle 2s linear infinite;
+  opacity: 0.1;
+  user-select: none;
+  filter: brightness(50%);
+
+}
+
+.bracket:hover {
+
+}
+
 
 
