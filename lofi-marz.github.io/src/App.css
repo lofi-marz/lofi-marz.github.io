@@ -8,6 +8,7 @@
   --main-color: #087f5b;
   --main-bg-dark-color: #212529;
   --default-margin: 10px;
+  --drop-shadow: drop-shadow(2px 4px 0px rgba(0,0,0,0.2));
 
   font-size: 62.5%;
 }
@@ -85,6 +86,7 @@ html, body {
   width: fit-content;
   font-family: 'Manrope', sans-serif;
   margin: var(--default-margin);
+  filter: var(--drop-shadow);
 }
 
 .highlight {
@@ -121,6 +123,19 @@ html, body {
   user-select: none;
   filter: brightness(50%);
 
+}
+
+.social-icon {
+	transition-duration: 0.4s;
+}
+
+.social-icon:hover {
+	transform: translate(-1px, -1px);
+	color: var(--main-color);
+}
+
+.social-icon svg {
+	filter: var(--drop-shadow);
 }
 
 .bracket:hover {
