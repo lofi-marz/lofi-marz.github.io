@@ -15,7 +15,7 @@ interface Particle {
     color: Color;
 }
 
-const DitheringSketch: React.FC = () => {
+const ImageManipulationSketch: React.FC = () => {
 
     let img: P5.Image;
     let elapsedTime = 0;
@@ -67,6 +67,7 @@ const DitheringSketch: React.FC = () => {
             const d = p5.dist(p.x, p.y, 125, 125);
             p.dx = 0*p5.sin(elapsedTime + d/64) * 5;
             p.dy = p5.cos(elapsedTime + d/64) * 5;
+
             //p.y += p5.cos(elapsedTime) * 5;
 
 
@@ -94,5 +95,5 @@ const DitheringSketch: React.FC = () => {
     return <Sketch preload={preload} setup={setup} draw={draw} />;
 };
 
-export default DitheringSketch;
+export default ImageManipulationSketch;
 

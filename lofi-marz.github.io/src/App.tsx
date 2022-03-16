@@ -3,7 +3,6 @@ import './App.css';
 import {FaGithub, FaBook, FaAt, FaLinkedin} from 'react-icons/fa';
 import {ReactElement} from 'react';
 import {IconType, IconContext} from 'react-icons';
-import DitheringSketch from './sketches/dithering-sketch';
 
 interface Icon {
     icon: ReactElement<IconType>
@@ -39,7 +38,7 @@ function App() {
                             {icons.map((i => <a key={i.link} className='social-icon' href={i.link}>{i.icon}</a>))}
                         </div>
                     </IconContext.Provider>
-                    <DitheringSketch></DitheringSketch>
+
                 </div>
             </section>
         </div>
