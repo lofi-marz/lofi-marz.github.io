@@ -26,9 +26,8 @@ class Metaball {
         this.vx = startVx;
         this.vy = startVy;
     }
-
-
 }
+
 
 /*function dist(x1: number, y1: number, x2: number, y2: number) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
@@ -49,6 +48,8 @@ const MetaballsSketch: React.FC = () => {
     //See annotations in JS for more information
     const setup = (p5: P5, canvasParentRef: Element) => {
 
+
+
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500).parent(canvasParentRef);
         p5.pixelDensity(1);
@@ -58,7 +59,7 @@ const MetaballsSketch: React.FC = () => {
         for (let i = 0; i < 10; i++) {
             const x = p5.random(p5.width);
             const y = p5.random(p5.height);
-            const r = p5.random(50 * SCALE,1000 * SCALE);
+            const r = p5.random(50 * SCALE,500 * SCALE);
             const vx = p5.random(-5 * SCALE, 5 * SCALE);
             const vy = p5.random(-5 * SCALE, 5 * SCALE);
             metaballs.push(new Metaball(x,y, r, vx, vy));
@@ -67,9 +68,9 @@ const MetaballsSketch: React.FC = () => {
     };
 
     const draw = (p5: P5) => {
-        p5.colorMode(p5.HSB);
         p5.loadPixels();
-        p5.background('#212529');
+        p5.clear();
+
 
 
         //TODO: Make this more efficient
@@ -94,7 +95,9 @@ const MetaballsSketch: React.FC = () => {
                 }
                 //console.log(density);
                 //if (i % 100 == 0) console.log(density);
-                //density = density > 5 ? 255 :  0;
+                density = density > 240 ? 255 :  0;
+
+                if (squaredDist(x,y, p5.width/2, p5.height/2) > 250*250) density = 0;
                 //if (density < slider.value()) density/=
 
 
@@ -134,7 +137,10 @@ const MetaballsSketch: React.FC = () => {
         }
 
         p5.updatePixels();
-
+        const fps = p5.frameRate();
+        p5.fill(255);
+        p5.stroke(0);
+        p5.text('FPS: ' + fps.toFixed(2), 10, p5.height - 10);
 
 
     };

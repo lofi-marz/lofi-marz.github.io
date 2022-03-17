@@ -67,6 +67,7 @@ class Snake {
         p5.strokeWeight(size);
 
         p5.strokeJoin(p5.ROUND);
+
         p5.beginShape();
 
         for (let i = 0; i < this.segments.length; i++) {
