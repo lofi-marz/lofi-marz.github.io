@@ -26,24 +26,27 @@ function smoothMax(a: number, b: number, k: number): number {
     return -smoothMin(-a, -b, k);
 }*/
 
+function dist(x1: number, y1: number, x2: number, y2: number) {
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+}
+
+function strength(x1: number, y1: number, r: number, x2: number, y2:number): number {
+    const d = dist(x1, y1, x2, y2);
+    return  r/d;
+}
+
 const VisualiserSketch: React.FC = () => {
 
     const innerRadius = 150;
     const outerRadius = 225;
     const slices = 1000;
-    const roughness = 0.5;
+    const roughness = 0.7;
     let elapsedTime = 0;
+    let mouseProgress = 0;
     const setup = (p5: P5, canvasParentRef: Element) => {
 
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500).parent(canvasParentRef);
-
-
-
-
-
-
-
     };
 
     const draw = (p5: P5) => {
@@ -58,13 +61,12 @@ const VisualiserSketch: React.FC = () => {
         p5.strokeJoin(p5.ROUND);
         elapsedTime += p5.deltaTime / 1000;
         if (elapsedTime) console.log();
-        //const mouseX = p5.mouseX - p5.width/2;
-        //const mouseY = p5.mouseY - p5.height/2;
+        const mouseX = p5.mouseX - p5.width/2;
+        const mouseY = p5.mouseY - p5.height/2;
+
+
 
         for (let theta = 0; theta < p5.TAU; theta += p5.TAU/slices) {
-
-
-
 
             //console.log({i, theta});
             const phase = elapsedTime/2;
@@ -79,19 +81,39 @@ const VisualiserSketch: React.FC = () => {
 
             const noise = p5.noise(xoff, yoff, zoff);
 
-
             const r = p5.map(noise, 0, 1, innerRadius,outerRadius);
 
-            const x = p5.cos(theta) * r;
-            const y = p5.sin(theta) * r;
+            let x = p5.cos(theta) * r;
+            let y = p5.sin(theta) * r;
 
-            p5.vertex( x, y);
+
+            //if (dist(x,y, 0, 0) >= dist(mouseX, mouseY, 0, 0)) s = 0;
+            //
+            if (p5.mouseIsPressed) {
+                mouseProgress += 0.0001;
+
+            } else {
+                mouseProgress -= 0.0001;
+            }
+
+            const s = p5.lerp(0, strength(mouseX, mouseY, 100, x,y), mouseProgress);
+            x = p5.lerp(x, mouseX, s/5);
+            y = p5.lerp(y, mouseY, s/5);
+
+            mouseProgress = p5.min(p5.max( 0, mouseProgress), 1);
+
+
+
+
+
+
+            p5.vertex(x, y);
         }
         p5.endShape(p5.CLOSE);
 
         p5.fill('black');
         p5.noStroke();
-        p5.circle(0,0, innerRadius * 2);
+        //p5.circle(0,0, innerRadius * 2);
 
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import VisualiserSketch from '../sketches/visualiser-sketch';
+
+import WebGLTestSketch from '../sketches/webgl-test-sketch';
 const Intro: React.FC = () => {
 
     return (
@@ -10,7 +11,8 @@ const Intro: React.FC = () => {
                     <h1 id="name" className="title">hi, i&apos;m <span className="highlight">omari</span></h1>
                 </div>
             </section>
-            <VisualiserSketch></VisualiserSketch>
+            <WebGLTestSketch></WebGLTestSketch>
+
         </div>
     );
 };
