@@ -179,7 +179,14 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
     );
 
     uniqueVertices = uniqueVertices.sort((a, b) => {
-        return (a.y - b.y);
+        if (a.y != b.y) {
+            return (a.y - b.y);
+        } else {
+            //Idk if this actually works
+            const aTheta = Math.atan(a.y/a.x);
+            const bTheta = Math.atan(a.y/a.x);
+            return aTheta - bTheta;
+        }
     });
     uniqueVertices.forEach((v) => {
         v.normalize();
@@ -195,9 +202,10 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
 
 const WebGLTestSketch: React.FC = () => {
 
-    const rotationSpeed = Math.PI/8;
+    const rotationSpeed = Math.PI/16;
     const vertices = generateIcosphere(200, 3);
     let elapsedTime = 0;
+
     const setup = (p5: P5, canvasParentRef: Element) => {
 
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
@@ -208,11 +216,28 @@ const WebGLTestSketch: React.FC = () => {
 
     };
 
+    const drawVertex = (p5: P5, v: Vector3) => {
+
+        //const val = p5.map(v.y * (Math.pow(p5.sin(p5.millis()/1000), 3)), -50, 50, 0, 255);
+        //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
+        //const mouseAngle = p5.map(p5.mouseX * p5.mouseY, 0, p5.width * p5.height, 0, 205, true);
+        const yOffset = p5.map(v.y, -100, 100, 0, Math.PI);
+        const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
+        //const index = p5.map(i, 0, vertices.length, 0,255);
+
+        p5.fill(p5.color(val, 200, 223));
+
+
+        //p5.box(2);
+        //We don't actually need to render these with a lot of detail since they're so small
+        p5.sphere(2, 8, 8);
+        //p5.translate(-v.x, -v.y, -v.z);
+    };
+
     const draw = (p5: P5) => {
         elapsedTime += p5.deltaTime/1000;
         p5.clear();
         //p5.translate(p5.width/2, p5.height/2, 0);
-        p5.fill('white');
         p5.noStroke();
 
         /*
@@ -223,30 +248,20 @@ const WebGLTestSketch: React.FC = () => {
         p5.pointLight(255, 255, 255, locX, locY, 100);
         p5.colorMode(p5.HSB);*/
         //p5.rotateX(rotationSpeed * p5.millis()/1000);
-        p5.rotateX(p5.sin(elapsedTime/10));
-        p5.rotateZ(p5.cos(elapsedTime/10));
-        p5.rotateY(rotationSpeed * p5.millis()/1000);
+        //p5.rotateX(p5.map(p5.mouseY, 0, p5.height, Math.PI/4, -Math.PI/8, true));
 
+        p5.rotateZ(Math.PI/4);
+        p5.rotateY(rotationSpeed * elapsedTime);
         //p5.rotateZ(Math.PI/4);
 
         for (let i = 0; i < vertices.length; i++) {
             const v = vertices[i];
-            p5.push();
-            //const val = p5.map(v.y * (Math.pow(p5.sin(p5.millis()/1000), 3)), -50, 50, 0, 255);
-            //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
-            //const mouseAngle = p5.map(p5.mouseX * p5.mouseY, 0, p5.width * p5.height, 0, 205, true);
-            const yOffset = p5.map(v.y, -100, 100, 0, Math.PI);
-            const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
-            p5.fill(p5.color(val, 200, 223));
-
             p5.translate(v.x, v.y, v.z);
-            //p5.box(2);
-            p5.sphere(2);
-            p5.pop();
-
+            drawVertex(p5, v);
+            p5.translate(-v.x, -v.y, -v.z);
         }
 
-
+  
 
         
 
