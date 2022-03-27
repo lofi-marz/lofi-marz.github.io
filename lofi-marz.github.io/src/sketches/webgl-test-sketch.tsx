@@ -100,7 +100,6 @@ function generateIcosahedronVertices(): Vector3[] {
     faces.push([0, 1, 7]);
     faces.push([0, 7, 10]);
     faces.push([0, 10, 11]);
-
     // 5 adjacent faces
     faces.push([1, 5, 9]);
     faces.push([5, 11, 4]);
