@@ -233,14 +233,26 @@ const WebGLTestSketch: React.FC = () => {
 
     let elapsedTime = 0;
 
+    let mouseFadeIn = 0;
+
+    const updateHighlight = (p5: P5) => {
+        const color = colourSpace.get(p5.mouseX, p5.height-p5.mouseY);
+        const val = colourUnhash(color);
+        if (val != -1 && val != colourUnhash([255, 255, 255])) {
+            if (mouseIndex != val) mouseFadeIn = 0;
+            mouseIndex = val;
+        }
+    };
+
     const setup = (p5: P5, canvasParentRef: Element) => {
-        colourSpace = p5.createGraphics(p5.width, p5.height, p5.WEBGL);
 
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500, p5.WEBGL).parent(canvasParentRef);
-        p5.orbitControl();
-        p5.colorMode(p5.RGB, 255);
-        console.log(vertices);
+        p5.colorMode(p5.HSB, 255);
+        colourSpace = p5.createGraphics(p5.width, p5.height, p5.WEBGL);
+        //colourSpace.colorMode(p5.HSB);
+        colourSpace.rotateZ(Math.PI/4);
+
         for (let i = 0; i < vertices.length; i++) {
             const hash = colourHash(i);
             console.log(hash);
@@ -250,7 +262,7 @@ const WebGLTestSketch: React.FC = () => {
 
 
     const draw = (p5: P5) => {
-
+        colourSpace.loadPixels();
         elapsedTime += p5.deltaTime/1000;
         p5.clear();
         colourSpace.clear();
@@ -269,6 +281,9 @@ const WebGLTestSketch: React.FC = () => {
 
         p5.rotateZ(Math.PI/4);
         p5.rotateY(rotationSpeed * elapsedTime);
+
+
+        colourSpace.rotateY(rotationSpeed * p5.deltaTime/1000);
         //p5.rotateZ(Math.PI/4);
 
 
@@ -285,10 +300,10 @@ const WebGLTestSketch: React.FC = () => {
 
             if (mouseIndex != i) {
                 p5.fill(p5.color(val, 200, 223));
-
-                p5.fill(hash[0], hash[1], hash[2]);
+                //p5.fill(hash[0], hash[1], hash[2]);
             } else {
-                p5.fill(p5.color(255, 255, 255));
+                if (mouseFadeIn < 0) mouseFadeIn += 0.01;
+                p5.fill('white');
 
             }
 
@@ -296,20 +311,22 @@ const WebGLTestSketch: React.FC = () => {
 
             //p5.box(2);
             //We don't actually need to render these with a lot of detail since they're so small
-            p5.sphere(10, 8, 8);
+            p5.sphere(2, 8, 8);
             //p5.translate(-v.x, -v.y, -v.z);
             p5.translate(-v.x, -v.y, -v.z);
 
 
-            /*colourSpace.translate(v.x, v.y, v.z);
+            colourSpace.translate(v.x, v.y, v.z);
 
             colourSpace.fill(hash[0], hash[1], hash[2]);
             colourSpace.sphere(2, 8, 8);
 
-            colourSpace.translate(-v.x, -v.y, -v.z);*/
+            colourSpace.translate(-v.x, -v.y, -v.z);
+
         }
 
-  
+
+
 
         
 
@@ -325,18 +342,15 @@ const WebGLTestSketch: React.FC = () => {
         p5.resizeCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE);
     };*/
 
-    const mouseClicked = (p5: P5) => {
-        const color = p5.get(p5.mouseX, p5.height-p5.mouseY);
-        const val = colourUnhash(color);
-        if (val != -1) mouseIndex = val;
-        console.log({x: p5.mouseX, y: p5.mouseY});
-        console.log({mouseIndex, color});
 
-        console.log(colourUnhash(colourHash(256*256)));
+
+
+
+    const mouseClicked = (_: P5) => {
+        colourSpace.save('test.png');
     };
 
-
-    return <Sketch  setup={setup} draw={draw} mouseClicked={mouseClicked}/>;
+    return <Sketch setup={setup} draw={draw}  mouseClicked={mouseClicked} />;
 };
 
 export default WebGLTestSketch;
