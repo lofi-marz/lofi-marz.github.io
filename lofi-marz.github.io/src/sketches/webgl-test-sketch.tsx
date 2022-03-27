@@ -31,6 +31,7 @@ class Vector3 {
     x: number;
     y: number;
     z: number;
+
     
     constructor(x: number, y: number, z: number) {
         this.x = x;
@@ -130,6 +131,30 @@ function generateIcosahedronVertices(): Vector3[] {
     return realVertexList;
 }
 
+function colourHash(i: number) {
+    i += 1;
+    const b = Math.floor(i % 255);
+    const g = Math.floor((i/255) % 255);
+    const r = Math.floor((i/(255 * 255)) % 255);
+    // The index of i is 255
+    // So its hash should be 000 000 255
+    // i = 256
+    // hash = 000 001 000
+    // i = 257
+    // hash = 000 001 001
+    /// i = 65026
+    // hash should = 001 000 001
+    // because i % 255 = 001
+    // i/255 % 255 = 0
+    // i / 255 / 255 % 255 = 0
+    return [r, g, b];
+}
+
+function colourUnhash(colour: number[])
+{
+    return (colour[0] * 255 * 255 + colour[1] * 255 + colour[2]) - 1;
+}
+
 function splitTriangles(vertices: Vector3[]): Vector3[] {
 
     const newVertices = [];
@@ -174,7 +199,7 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
 
 
     vertices.forEach((v) => {
-        if (!uniqueVertices.includes(v)) uniqueVertices.push(v);}
+        if (!uniqueVertices.some(v2 => v.x == v2.x && v.y == v2.y && v.z == v2.z)) uniqueVertices.push(v);}
     );
 
     uniqueVertices = uniqueVertices.sort((a, b) => {
@@ -203,42 +228,35 @@ const WebGLTestSketch: React.FC = () => {
 
     const rotationSpeed = Math.PI/16;
     const vertices = generateIcosphere(200, 3);
+    let mouseIndex = 0;
+    let colourSpace: P5.Graphics;
+
     let elapsedTime = 0;
 
     const setup = (p5: P5, canvasParentRef: Element) => {
+        colourSpace = p5.createGraphics(p5.width, p5.height, p5.WEBGL);
 
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500, p5.WEBGL).parent(canvasParentRef);
         p5.orbitControl();
-        p5.colorMode(p5.HSB, 255);
+        p5.colorMode(p5.RGB, 255);
         console.log(vertices);
-
+        for (let i = 0; i < vertices.length; i++) {
+            const hash = colourHash(i);
+            console.log(hash);
+        }
     };
 
-    const drawVertex = (p5: P5, v: Vector3) => {
 
-        //const val = p5.map(v.y * (Math.pow(p5.sin(p5.millis()/1000), 3)), -50, 50, 0, 255);
-        //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
-        //const mouseAngle = p5.map(p5.mouseX * p5.mouseY, 0, p5.width * p5.height, 0, 205, true);
-        const yOffset = p5.map(v.y, -100, 100, 0, Math.PI);
-        const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
-        //const index = p5.map(i, 0, vertices.length, 0,255);
-
-        p5.fill(p5.color(val, 200, 223));
-
-
-        //p5.box(2);
-        //We don't actually need to render these with a lot of detail since they're so small
-        p5.sphere(2, 8, 8);
-        //p5.translate(-v.x, -v.y, -v.z);
-    };
 
     const draw = (p5: P5) => {
+
         elapsedTime += p5.deltaTime/1000;
         p5.clear();
+        colourSpace.clear();
         //p5.translate(p5.width/2, p5.height/2, 0);
         p5.noStroke();
-
+        colourSpace.noStroke();
         /*
         const locX = p5.mouseX - p5.height / 2;
         const locY = p5.mouseY - p5.width / 2;
@@ -253,11 +271,42 @@ const WebGLTestSketch: React.FC = () => {
         p5.rotateY(rotationSpeed * elapsedTime);
         //p5.rotateZ(Math.PI/4);
 
+
         for (let i = 0; i < vertices.length; i++) {
             const v = vertices[i];
+            const hash = colourHash(i);
             p5.translate(v.x, v.y, v.z);
-            drawVertex(p5, v);
+            //const val = p5.map(v.y * (Math.pow(p5.sin(p5.millis()/1000), 3)), -50, 50, 0, 255);
+            //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
+            //const mouseAngle = p5.map(p5.mouseX * p5.mouseY, 0, p5.width * p5.height, 0, 205, true);
+            const yOffset = p5.map(v.y, -100, 100, 0, Math.PI);
+            const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
+            //const index = p5.map(i, 0, vertices.length, 0,255);
+
+            if (mouseIndex != i) {
+                p5.fill(p5.color(val, 200, 223));
+
+                p5.fill(hash[0], hash[1], hash[2]);
+            } else {
+                p5.fill(p5.color(255, 255, 255));
+
+            }
+
+
+
+            //p5.box(2);
+            //We don't actually need to render these with a lot of detail since they're so small
+            p5.sphere(10, 8, 8);
+            //p5.translate(-v.x, -v.y, -v.z);
             p5.translate(-v.x, -v.y, -v.z);
+
+
+            /*colourSpace.translate(v.x, v.y, v.z);
+
+            colourSpace.fill(hash[0], hash[1], hash[2]);
+            colourSpace.sphere(2, 8, 8);
+
+            colourSpace.translate(-v.x, -v.y, -v.z);*/
         }
 
   
@@ -276,9 +325,18 @@ const WebGLTestSketch: React.FC = () => {
         p5.resizeCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE);
     };*/
 
+    const mouseClicked = (p5: P5) => {
+        const color = p5.get(p5.mouseX, p5.height-p5.mouseY);
+        const val = colourUnhash(color);
+        if (val != -1) mouseIndex = val;
+        console.log({x: p5.mouseX, y: p5.mouseY});
+        console.log({mouseIndex, color});
+
+        console.log(colourUnhash(colourHash(256*256)));
+    };
 
 
-    return <Sketch  setup={setup} draw={draw} />;
+    return <Sketch  setup={setup} draw={draw} mouseClicked={mouseClicked}/>;
 };
 
 export default WebGLTestSketch;
