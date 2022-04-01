@@ -68,6 +68,23 @@ class Vector3 {
     }
 }
 
+function calcAngle(v: Vector3): number {
+    let angle = 0;
+    if (v.z > 0) {
+        angle =  Math.atan(v.x / v.z);
+    } else if (v.z < 0 && v.x >= 0) {
+        angle =  Math.atan(v.x / v.z) + Math.PI;
+    } else if (v.z < 0 && v.x < 0) {
+        angle =  Math.atan(v.x / v.z) - Math.PI;
+    } else if (v.z == 0 && v.x > 0) {
+        angle =  Math.PI/2;
+    } else if (v.z == 0 && v.x < 0) {
+        angle =  -Math.PI/2;
+    }
+    return Math.PI/2 - angle;
+
+}
+
 function generateIcosahedronVertices(): Vector3[] {
     
     const phi = (1 + Math.sqrt(5)) / 2;
@@ -131,29 +148,6 @@ function generateIcosahedronVertices(): Vector3[] {
     return realVertexList;
 }
 
-function colourHash(i: number) {
-    i += 1;
-    const b = Math.floor(i % 255);
-    const g = Math.floor((i/255) % 255);
-    const r = Math.floor((i/(255 * 255)) % 255);
-    // The index of i is 255
-    // So its hash should be 000 000 255
-    // i = 256
-    // hash = 000 001 000
-    // i = 257
-    // hash = 000 001 001
-    /// i = 65026
-    // hash should = 001 000 001
-    // because i % 255 = 001
-    // i/255 % 255 = 0
-    // i / 255 / 255 % 255 = 0
-    return [r, g, b];
-}
-
-function colourUnhash(colour: number[])
-{
-    return (colour[0] * 255 * 255 + colour[1] * 255 + colour[2]) - 1;
-}
 
 function splitTriangles(vertices: Vector3[]): Vector3[] {
 
@@ -164,7 +158,6 @@ function splitTriangles(vertices: Vector3[]): Vector3[] {
         const point1 = vertices[i];
         const point2 = vertices[i+1];
         const point3 = vertices[i+2];
-
         const mid1 = Vector3.mid(point1, point2);
         const mid2 = Vector3.mid(point2, point3);
         const mid3 = Vector3.mid(point3, point1);
@@ -178,7 +171,6 @@ function splitTriangles(vertices: Vector3[]): Vector3[] {
 
         for (let j = 0; j < newPoints.length; j++)
         {
-
             newVertices.push(newPoints[j]);
         }
     }
@@ -199,76 +191,73 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
 
 
     vertices.forEach((v) => {
-        if (!uniqueVertices.some(v2 => v.x == v2.x && v.y == v2.y && v.z == v2.z)) uniqueVertices.push(v);}
+        if (!uniqueVertices.some(v2 => v.x == v2.x && v.y == v2.y && v.z == v2.z)) uniqueVertices.push(new Vector3(v.x, v.y, v.z));}
     );
 
-    uniqueVertices = uniqueVertices.sort((a, b) => {
-        if (a.y != b.y) {
-            return (a.y - b.y);
-        } else {
-            //Idk if this actually works
-            const aTheta = Math.atan(a.y/a.x);
-            const bTheta = Math.atan(a.y/a.x);
-            return aTheta - bTheta;
-        }
-    });
-    uniqueVertices.forEach((v) => {
+
+    uniqueVertices = uniqueVertices.map((v) => {
         v.normalize();
-        v.x *= radius;
-        v.y *= radius;
-        v.z *= radius;
+        return v.map((n) => n * radius);
+    });
+    const layers = new Map<number, Vector3[]>();
+    uniqueVertices.forEach((v) => {
+        if (!layers.has( v.y)) layers.set(v.y, []);
+
+        const layer = layers.get(v.y);
+        if (!layer) return;
+        
+        layer.push(v);
+
+        layers.set(v.y, layer);
+    });
+    const sortedVertices: Vector3[] = [];
+    console.log(layers);
+    layers.forEach((l) => {
+        sortedVertices.push(...l.sort((a, b) => {
+            const aTheta = calcAngle(a);
+            const bTheta = calcAngle(b);
+            return  aTheta - bTheta;
+
+        }));
     });
 
-    console.log(uniqueVertices[0]);
-    console.log(uniqueVertices[uniqueVertices.length - 1]);
-    return uniqueVertices;
+
+    console.log(sortedVertices[0]);
+    console.log(sortedVertices[sortedVertices.length - 1]);
+    return sortedVertices;
 }
 
 const WebGLTestSketch: React.FC = () => {
 
     const rotationSpeed = Math.PI/16;
     const vertices = generateIcosphere(200, 3);
-    let mouseIndex = 0;
-    let colourSpace: P5.Graphics;
 
     let elapsedTime = 0;
+    let highlighted = 0;
 
-    let mouseFadeIn = 0;
 
-    const updateHighlight = (p5: P5) => {
-        const color = colourSpace.get(p5.mouseX, p5.height-p5.mouseY);
-        const val = colourUnhash(color);
-        if (val != -1 && val != colourUnhash([255, 255, 255])) {
-            if (mouseIndex != val) mouseFadeIn = 0;
-            mouseIndex = val;
-        }
-    };
 
     const setup = (p5: P5, canvasParentRef: Element) => {
 
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500, p5.WEBGL).parent(canvasParentRef);
         p5.colorMode(p5.HSB, 255);
-        colourSpace = p5.createGraphics(p5.width, p5.height, p5.WEBGL);
-        //colourSpace.colorMode(p5.HSB);
-        colourSpace.rotateZ(Math.PI/4);
-
-        for (let i = 0; i < vertices.length; i++) {
-            const hash = colourHash(i);
-            console.log(hash);
-        }
+        console.log(vertices);
+        console.log(vertices.map((v) => Math.round(180/Math.PI * calcAngle(v))));
     };
 
 
 
     const draw = (p5: P5) => {
-        colourSpace.loadPixels();
+
         elapsedTime += p5.deltaTime/1000;
         p5.clear();
-        colourSpace.clear();
+
         //p5.translate(p5.width/2, p5.height/2, 0);
         p5.noStroke();
-        colourSpace.noStroke();
+        highlighted = p5.round(elapsedTime % vertices.length);
+
+        //console.log(highlighted, vertices[highlighted]);
         /*
         const locX = p5.mouseX - p5.height / 2;
         const locY = p5.mouseY - p5.width / 2;
@@ -282,14 +271,13 @@ const WebGLTestSketch: React.FC = () => {
         p5.rotateZ(Math.PI/4);
         p5.rotateY(rotationSpeed * elapsedTime);
 
+        //console.log(highlighted);
 
-        colourSpace.rotateY(rotationSpeed * p5.deltaTime/1000);
-        //p5.rotateZ(Math.PI/4);
 
 
         for (let i = 0; i < vertices.length; i++) {
             const v = vertices[i];
-            const hash = colourHash(i);
+
             p5.translate(v.x, v.y, v.z);
             //const val = p5.map(v.y * (Math.pow(p5.sin(p5.millis()/1000), 3)), -50, 50, 0, 255);
             //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
@@ -298,34 +286,42 @@ const WebGLTestSketch: React.FC = () => {
             const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
             //const index = p5.map(i, 0, vertices.length, 0,255);
 
-            if (mouseIndex != i) {
+            if (highlighted != i) {
                 p5.fill(p5.color(val, 200, 223));
                 //p5.fill(hash[0], hash[1], hash[2]);
             } else {
-                if (mouseFadeIn < 0) mouseFadeIn += 0.01;
                 p5.fill('white');
-
             }
 
 
 
             //p5.box(2);
             //We don't actually need to render these with a lot of detail since they're so small
-            p5.sphere(2, 8, 8);
+            p5.sphere(highlighted == i ? 10 : 10, 8, 8);
             //p5.translate(-v.x, -v.y, -v.z);
             p5.translate(-v.x, -v.y, -v.z);
 
 
-            colourSpace.translate(v.x, v.y, v.z);
-
-            colourSpace.fill(hash[0], hash[1], hash[2]);
-            colourSpace.sphere(2, 8, 8);
-
-            colourSpace.translate(-v.x, -v.y, -v.z);
-
         }
 
+        const theta = elapsedTime;
 
+        const z = 210 * Math.sin(theta);
+        const x = 210 * Math.cos(theta);
+        const pos = new Vector3(x, 0, z);
+        const testTheta = calcAngle(pos);
+        const newZ = 210 * Math.sin(testTheta);
+        const newX = 210 * Math.cos(testTheta);
+        //console.log(testTheta);
+        p5.fill('white');
+        p5.translate(x, 20, z);
+        p5.sphere(10);
+        p5.translate(-x, -20, -z);
+
+        p5.translate(newX, 0, newZ);
+        p5.fill('red');
+        p5.sphere(10);
+        p5.translate(-newX, 0, -newZ);
 
 
         
@@ -346,11 +342,9 @@ const WebGLTestSketch: React.FC = () => {
 
 
 
-    const mouseClicked = (_: P5) => {
-        colourSpace.save('test.png');
-    };
 
-    return <Sketch setup={setup} draw={draw}  mouseClicked={mouseClicked} />;
+
+    return <Sketch setup={setup} draw={draw}  />;
 };
 
 export default WebGLTestSketch;
