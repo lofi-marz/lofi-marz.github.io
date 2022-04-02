@@ -1,6 +1,8 @@
 
 import './App.css';
 import Intro from './components/Intro';
+import {ThemeProvider} from 'styled-components';
+import theme from './theme';
 
 function App() {
 
@@ -17,7 +19,10 @@ function App() {
     };*/
 
     return (
-        <Intro></Intro>
+        <ThemeProvider theme={theme}>
+            <Intro></Intro>
+        </ThemeProvider>
+
     );
 }
 

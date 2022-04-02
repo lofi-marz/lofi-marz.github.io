@@ -1,6 +1,7 @@
 import React from 'react';
 import Sketch from 'react-p5';
 import P5 from 'p5';
+import {useTheme} from 'styled-components';
 
 
 /*
@@ -229,12 +230,14 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
 
 const WebGLTestSketch: React.FC = () => {
 
+    const theme = useTheme();
+    let hue1: number;
+    let hue2: number;
+
     const rotationSpeed = Math.PI/16;
     const vertices = generateIcosphere(200, 3);
 
     let elapsedTime = 0;
-    let highlighted = 0;
-
 
 
     const setup = (p5: P5, canvasParentRef: Element) => {
@@ -242,8 +245,22 @@ const WebGLTestSketch: React.FC = () => {
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(500, 500, p5.WEBGL).parent(canvasParentRef);
         p5.colorMode(p5.HSB, 255);
-        console.log(vertices);
-        console.log(vertices.map((v) => Math.round(180/Math.PI * calcAngle(v))));
+
+        //Get the colours from the palette
+        //The modulo is because the start and end of hue are red
+        //We want the end to avoid going through the whole colour wheel
+        // |r oygbi v r| to go from v to r instead of r to v;
+        hue2 = (p5.hue(theme.colors[theme.colors.main]['100']) + 255) % 256;
+        hue1 = (p5.hue(theme.colors[theme.colors.accent]['100']) + 255) % 256;
+        if (hue1 > hue2) {
+            const temp = hue1;
+            hue1 = hue2;
+            hue2 = temp;
+        }
+        console.log(hue1);
+        console.log(hue2);
+
+        console.log(theme.colors[theme.colors.main]['100']);
     };
 
 
@@ -255,7 +272,6 @@ const WebGLTestSketch: React.FC = () => {
 
         //p5.translate(p5.width/2, p5.height/2, 0);
         p5.noStroke();
-        highlighted = p5.round(elapsedTime % vertices.length);
 
         //console.log(highlighted, vertices[highlighted]);
         /*
@@ -283,45 +299,25 @@ const WebGLTestSketch: React.FC = () => {
             //const val = p5.map(p5.sin(v.y/10 + p5.millis()/1000), -1, 1, 200, 255);
             //const mouseAngle = p5.map(p5.mouseX * p5.mouseY, 0, p5.width * p5.height, 0, 205, true);
             const yOffset = p5.map(v.y, -100, 100, 0, Math.PI);
-            const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, 200, 255);
+            const val = p5.map( p5.sin(yOffset + elapsedTime), -1, 1, hue1, hue2);
             //const index = p5.map(i, 0, vertices.length, 0,255);
 
-            if (highlighted != i) {
-                p5.fill(p5.color(val, 200, 223));
-                //p5.fill(hash[0], hash[1], hash[2]);
-            } else {
-                p5.fill('white');
-            }
+
+            p5.fill(p5.color(val, 200, 223));
+
 
 
 
             //p5.box(2);
             //We don't actually need to render these with a lot of detail since they're so small
-            p5.sphere(highlighted == i ? 10 : 10, 8, 8);
+            p5.sphere(2, 8, 8);
             //p5.translate(-v.x, -v.y, -v.z);
             p5.translate(-v.x, -v.y, -v.z);
 
 
         }
 
-        const theta = elapsedTime;
 
-        const z = 210 * Math.sin(theta);
-        const x = 210 * Math.cos(theta);
-        const pos = new Vector3(x, 0, z);
-        const testTheta = calcAngle(pos);
-        const newZ = 210 * Math.sin(testTheta);
-        const newX = 210 * Math.cos(testTheta);
-        //console.log(testTheta);
-        p5.fill('white');
-        p5.translate(x, 20, z);
-        p5.sphere(10);
-        p5.translate(-x, -20, -z);
-
-        p5.translate(newX, 0, newZ);
-        p5.fill('red');
-        p5.sphere(10);
-        p5.translate(-newX, 0, -newZ);
 
 
         
