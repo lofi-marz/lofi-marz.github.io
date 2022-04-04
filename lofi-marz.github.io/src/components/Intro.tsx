@@ -1,18 +1,25 @@
 import React from 'react';
 
-import WebGLTestSketch from '../sketches/webgl-test-sketch';
+
+import Flex from './CenteredFlex';
+
+import ScrollPrompt from './ScrollPrompt';
+import Title from './Title';
+import RandomBackgroundSketch from './RandomBackgroundSketch';
+
 const Intro: React.FC = () => {
 
     return (
-        <div className='container centered-flex intro'>
+        <Flex className='intro'>
             <section id="main-box">
                 <div>
-                    <h1 id="name" className="title">hi, i&apos;m <span className="highlight">omari</span></h1>
+                    <Title>{'hi, i\'m omari'}</Title>
                 </div>
             </section>
-            <WebGLTestSketch></WebGLTestSketch>
+            <ScrollPrompt/>
+            <RandomBackgroundSketch/>
 
-        </div>
+        </Flex>
     );
 };
 

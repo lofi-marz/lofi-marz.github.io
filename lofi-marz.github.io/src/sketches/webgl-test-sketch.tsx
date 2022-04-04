@@ -1,7 +1,8 @@
 import React from 'react';
-import Sketch from 'react-p5';
+
 import P5 from 'p5';
 import {useTheme} from 'styled-components';
+import BackgroundSketch from '../components/BackgroundSketch';
 
 
 /*
@@ -340,7 +341,7 @@ const WebGLTestSketch: React.FC = () => {
 
 
 
-    return <Sketch setup={setup} draw={draw}  />;
+    return <BackgroundSketch setup={setup} draw={draw}  />;
 };
 
 export default WebGLTestSketch;

@@ -1,8 +1,11 @@
 
 import './App.css';
 import Intro from './components/Intro';
-import {ThemeProvider} from 'styled-components';
 import theme from './theme';
+import GlobalStyle from './components/GlobalStyle';
+import {ThemeProvider} from 'styled-components';
+import About from './components/About';
+import Root from './components/Root';
 
 function App() {
 
@@ -20,7 +23,11 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Intro></Intro>
+            <GlobalStyle></GlobalStyle>
+            <Root>
+                <Intro/>
+                <About/>
+            </Root>
         </ThemeProvider>
 
     );

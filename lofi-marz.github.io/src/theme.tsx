@@ -27,7 +27,7 @@ type ColorPalette = Palette & {
 declare module 'styled-components' {
     export interface DefaultTheme {
         colors: ColorPalette;
-
+        fontFamily: string;
     }
 }
 
@@ -195,7 +195,15 @@ const theme: DefaultTheme = {
         main: 'red',
         accent: 'violet'
     },
+    fontFamily: 'Lato',
 };
 
+export function main(theme: DefaultTheme) {
+    return theme.colors[theme.colors.main];
+}
+
+export function accent(theme: DefaultTheme) {
+    return theme.colors[theme.colors.accent];
+}
 
 export default theme;
