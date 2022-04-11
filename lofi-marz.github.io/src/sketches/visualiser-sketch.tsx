@@ -1,6 +1,6 @@
 import React from 'react';
-import Sketch from 'react-p5';
 import P5 from 'p5';
+import BackgroundSketch from '../components/BackgroundSketch';
 
 
 /*
@@ -127,7 +127,7 @@ const VisualiserSketch: React.FC = () => {
 
 
 
-    return <Sketch  setup={setup} draw={draw} />;
+    return <BackgroundSketch setup={setup} draw={draw} />;
 };
 
 export default VisualiserSketch;

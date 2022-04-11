@@ -1,26 +1,25 @@
 import React from 'react';
 
-
-import Flex from './CenteredFlex';
-
-import ScrollPrompt from './ScrollPrompt';
-import Title from './Title';
 import RandomBackgroundSketch from './RandomBackgroundSketch';
+
+import { CenteredPageContainer } from './PageContainer';
+import Title from './Title';
+import styled from 'styled-components';
 
 const Intro: React.FC = () => {
 
     return (
-        <Flex className='intro'>
-            <section id="main-box">
-                <div>
-                    <Title>{'hi, i\'m omari'}</Title>
-                </div>
-            </section>
-            <ScrollPrompt/>
+        <Wrapper>
+            <Title>{'hi, i\'m omari'}</Title>
             <RandomBackgroundSketch/>
-
-        </Flex>
+        </Wrapper>
     );
 };
+
+// Without this, the section has no specific positioning
+// This means the p5 sketch positions relative to the page, which isn't scrolling
+const Wrapper = styled(CenteredPageContainer)`
+  position: relative;
+`;
 
 export default Intro;

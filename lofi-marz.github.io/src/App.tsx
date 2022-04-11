@@ -23,7 +23,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <GlobalStyle></GlobalStyle>
+            <GlobalStyle/>
             <Root>
                 <Intro/>
                 <About/>

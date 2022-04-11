@@ -1,6 +1,6 @@
 import React from 'react';
-import Sketch from 'react-p5';
 import P5 from 'p5';
+import BackgroundSketch from '../components/BackgroundSketch';
 
 interface Vertex {
     x: number;
@@ -23,7 +23,7 @@ const generateShape = (sides: number, resolution: number): Vertex[] => {
 
     for (let theta = 0; theta < 2 * Math.PI; theta += Math.PI / resolution) {
         //const r = 200 * fTheta(theta, p5.map(p5.sin(elapsedTime), -1, 1, 3, 10));
-        const r = 200 * fTheta(theta, sides);
+        const r = 100 * fTheta(theta, sides);
         const x = r * Math.cos(theta - Math.PI/2);
         const y = r * Math.sin(theta - Math.PI/2);
         vertices.push({x, y});
@@ -44,7 +44,7 @@ const PolygonMorphSketch: React.FC = () => {
     const rotationSpeed = 1;
     const transitionSpeed = 1;
 
-    const pauseTime = 500;
+    const pauseTime = 1000;
 
     let remainingPauseTime = 0;
 
@@ -146,7 +146,7 @@ const PolygonMorphSketch: React.FC = () => {
 
 
 
-    return <Sketch setup={setup} draw={draw} />;
+    return <BackgroundSketch setup={setup} draw={draw} />;
 };
 
 export default PolygonMorphSketch;

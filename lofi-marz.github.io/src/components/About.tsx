@@ -1,14 +1,17 @@
 import React from 'react';
 import Title from './Title';
-import PageContainer from './PageContainer';
+import { PaddedPageContainer } from './PageContainer';
 
 const About: React.FC = () => {
 
     return (
-        <PageContainer>
-            <Title>Me</Title>
-        </PageContainer>
+        <PaddedPageContainer>
+            <Title>who am I?</Title>
+        </PaddedPageContainer>
     );
 };
+
+
+
 
 export default About;

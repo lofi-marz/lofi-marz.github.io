@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import {main} from '../theme';
+import {accent} from '../theme';
 import React from 'react';
 
 const Wrapper = styled.a` 
@@ -13,7 +13,7 @@ const Wrapper = styled.a`
     
     :hover {
       transform: translate(-2px, -2px);
-      color: ${props => main(props.theme)[900]}
+      color: ${props => accent(props.theme)[900]}
     };
  `;
 
