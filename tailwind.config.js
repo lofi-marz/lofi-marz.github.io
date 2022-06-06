@@ -19,11 +19,12 @@ module.exports = {
             },
             colors: {
                 primary: colors.red[500],
-                secondary: colors.pink[500],
+                secondary: colors.orange[500],
             },
         },
     },
     plugins: [
+        require('@tailwindcss/typography'),
         plugin(function ({ matchUtilities, theme }) {
             matchUtilities(
                 {

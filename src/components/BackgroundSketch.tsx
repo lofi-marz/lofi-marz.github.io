@@ -13,12 +13,12 @@ export function BackgroundSketch() {
                     'PolygonMorphSketch',
                     'WebGlTestSketch',
                     'RotatingWavesSketch',
-                    'VisualiserSketch',
+                    //'VisualiserSketch',
                 ];
 
-                const randomComponent =
-                    sketches[Math.floor(Math.random() * sketches.length)];
-                //const randomComponent = 'VisualiserSketch'
+                /*const randomComponent =
+                    sketches[Math.floor(Math.random() * sketches.length)];*/
+                const randomComponent = 'WebGlTestSketch';
                 return mod[randomComponent];
             }),
         {

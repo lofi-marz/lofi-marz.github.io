@@ -9,13 +9,13 @@ export function Layout({ children }: LayoutProps) {
 
     return (
         <div className="dark h-full min-h-screen w-screen">
-            <div className="flex flex-col items-center justify-center dark:bg-black">
+            <div className="flex flex-col items-center justify-center dark:bg-zinc-900">
                 <Head>
                     <title>hi</title>
                     <meta name="description" content="Omari's Portfolio" />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <main className="flex w-screen grow flex-col dark:bg-black dark:text-white">
+                <main className="flex w-screen grow flex-col dark:bg-zinc-900 dark:text-white">
                     {children}
                 </main>
             </div>

@@ -20,7 +20,7 @@ const generateShape = (sides: number, resolution: number): Vertex[] => {
 
     for (let theta = 0; theta < 2 * Math.PI; theta += Math.PI / resolution) {
         //const r = 200 * fTheta(theta, p5.map(p5.sin(elapsedTime), -1, 1, 3, 10));
-        const r = 200 * fTheta(theta, sides);
+        const r = 225 * fTheta(theta, sides);
         const x = r * Math.cos(theta - Math.PI / 2);
         const y = r * Math.sin(theta - Math.PI / 2);
         vertices.push({ x, y });
@@ -41,6 +41,8 @@ export const PolygonMorphSketch: React.FC = () => {
 
     const pauseTime = 1000;
 
+    let bg: P5.Color;
+
     let remainingPauseTime = 0;
 
     let toCircle = true;
@@ -58,10 +60,11 @@ export const PolygonMorphSketch: React.FC = () => {
             sketchConfig.resolution.w,
             sketchConfig.resolution.h
         ).parent(canvasParentRef);
+        bg = p5.color(sketchConfig.bg);
     };
 
     const draw = (p5: P5) => {
-        p5.background(0, 150);
+        p5.background(bg);
         p5.translate(p5.width / 2, p5.height / 2);
 
         if (remainingPauseTime > 0) {

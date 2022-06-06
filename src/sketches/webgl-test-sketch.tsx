@@ -242,8 +242,8 @@ export const WebGlTestSketch: React.FC = () => {
         //The modulo is because the start and end of hue are red
         //We want the end to avoid going through the whole colour wheel
         // |r oygbi v r| to go from v to r instead of r to v;
-        hue2 = (p5.hue(colors.primary) + 255) % 256;
-        hue1 = (p5.hue(colors.secondary) + 255) % 256;
+        hue1 = p5.hue(colors.primary);
+        hue2 = p5.hue(colors.secondary);
         if (hue1 > hue2) {
             const temp = hue1;
             hue1 = hue2;

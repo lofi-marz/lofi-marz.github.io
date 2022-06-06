@@ -5,9 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    @apply scroll-smooth
+}
 
 body {
-    @apply font-text w-screen}
+    @apply font-text w-screen
+}
 
 
 h1 {
@@ -15,7 +19,7 @@ h1 {
 }
 
 .react-p5 {
-  @apply w-full bg-black invert dark:invert-0 max-h-screen !important
+  @apply w-full bg-zinc-900 invert dark:invert-0 max-h-screen !important
 }
 
 .react-p5 canvas {

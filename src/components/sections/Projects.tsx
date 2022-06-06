@@ -1,5 +1,5 @@
-import { FaLink } from 'react-icons/fa';
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { FaGithub, FaLink } from 'react-icons/fa';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 export type ProjectMdxData = {
     source: SerializedProjectMdx;
@@ -23,29 +23,38 @@ export type ProjectsProps = {
 
 function ProjectCard({ source, frontMatter }: ProjectCardProps) {
     console.log(frontMatter);
-    const techList = frontMatter.tech.split(',');
+    const techList = frontMatter.tech.split(',').sort();
 
     return (
-        <div className="flex h-48 flex-col justify-between bg-secondary p-5 shadow">
+        <div className="flex h-52 flex-col justify-between rounded bg-primary  p-5 shadow-xl">
             <div>
                 <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-bold lowercase">
+                    <h1 className="text-xl font-bold lowercase">
                         {frontMatter.title}
                     </h1>
-                    <a
-                        className="text-2xl transition-all"
-                        href="localhost:3005">
-                        <FaLink />
-                    </a>
+                    <span className="flex gap-2">
+                        <a
+                            className="text-2xl transition-all"
+                            href="localhost:3005">
+                            <FaGithub />
+                        </a>
+                        <a
+                            className="text-2xl transition-all"
+                            href="localhost:3005">
+                            <FaLink />
+                        </a>
+                    </span>
                 </div>
 
-                <div className="py-3">{frontMatter.description}</div>
+                <div className="prose prose-sm prose-invert py-3 text-white">
+                    <MDXRemote {...source} />
+                </div>
             </div>
             <div className="flex gap-1 text-sm">
                 {techList.map((t) => (
                     <span
                         key={t}
-                        className="p-1 px-2 font-mono text-white transition-all hover:bg-white hover:text-secondary">
+                        className="rounded bg-white p-1 px-2 font-mono text-primary transition-all">
                         {t}
                     </span>
                 ))}
@@ -56,11 +65,16 @@ function ProjectCard({ source, frontMatter }: ProjectCardProps) {
 
 export function Projects({ projects }: ProjectsProps) {
     return (
-        <section className="flex h-full min-h-screen w-screen flex-col items-center justify-center p-10 dark:bg-black">
-            <h1 className="p-10 font-title text-6xl font-bold">
+        <section
+            id="projects"
+            className="flex h-full min-h-screen w-screen  flex-col items-center justify-center p-10 dark:bg-zinc-900">
+            <h1 className="pb-10 font-title text-6xl font-bold">
                 stuff I've made
             </h1>
-            <div className=" grid w-full items-center justify-center  gap-10 auto-fill-cols-64 lg:auto-fill-cols-96">
+            <div className=" grid w-full items-center justify-center gap-10 auto-fill-cols-64 lg:auto-fill-cols-96">
+                {projects.map((p) => (
+                    <ProjectCard key={p.frontMatter.title} {...p} />
+                ))}
                 {projects.map((p) => (
                     <ProjectCard key={p.frontMatter.title} {...p} />
                 ))}

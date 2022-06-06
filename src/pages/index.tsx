@@ -5,6 +5,7 @@ import { getAllProjectFilePaths } from '../utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import { Navbar } from '../components/Navbar';
 
 type HomePageProps = {
     projects: ProjectMdxData[];
@@ -14,6 +15,7 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
     return (
         <>
             <Intro />
+            <Navbar />
             <Projects projects={projects} />
         </>
     );
