@@ -6,6 +6,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import { Navbar } from '../components/Navbar';
+import React from 'react';
 
 type HomePageProps = {
     projects: ProjectMdxData[];
@@ -13,11 +14,11 @@ type HomePageProps = {
 
 const Home: NextPage<HomePageProps> = ({ projects }) => {
     return (
-        <>
-            <Intro />
-            <Navbar />
-            <Projects projects={projects} />
-        </>
+        <React.Fragment key="home">
+            <Intro key="intro" />
+            <Navbar key="nav" />
+            <Projects key="projects" projects={projects} />
+        </React.Fragment>
     );
 };
 

@@ -9,6 +9,7 @@ export function Intro() {
     return (
         <section
             id="home"
+            key="home"
             className="flex h-[calc(100vh-4rem)] items-center justify-center">
             <div className="absolute z-0 p-10 lg:w-1/2">
                 <BackgroundSketch />

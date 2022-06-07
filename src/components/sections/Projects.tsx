@@ -72,6 +72,7 @@ export function Projects({ projects }: ProjectsProps) {
     return (
         <motion.section
             id="projects"
+            key="projects"
             className="flex h-full min-h-screen w-screen  flex-col items-center justify-center p-10 dark:bg-zinc-900">
             <h1 className="self-start pb-10 font-title text-6xl font-bold">
                 stuff I&apos;ve made
