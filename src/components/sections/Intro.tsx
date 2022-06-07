@@ -14,7 +14,7 @@ export function Intro() {
                 <BackgroundSketch />
             </div>
             <div className="z-10 flex flex-col items-center justify-center font-title text-5xl font-bold mix-blend-difference">
-                hi, I'm omari
+                hi, I&apos;m omari
                 <Chevron />
             </div>
         </section>

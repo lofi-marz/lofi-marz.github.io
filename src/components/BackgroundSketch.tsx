@@ -9,14 +9,14 @@ export function BackgroundSketch() {
         () =>
             import('sketches').then((mod) => {
                 type SketchComponent = keyof typeof mod;
-                const sketches: SketchComponent[] = [
+                /*const sketches: SketchComponent[] = [
                     'PolygonMorphSketch',
                     'WebGlTestSketch',
                     'RotatingWavesSketch',
                     //'VisualiserSketch',
                 ];
 
-                /*const randomComponent =
+                const randomComponent =
                     sketches[Math.floor(Math.random() * sketches.length)];*/
                 const randomComponent = 'WebGlTestSketch';
                 return mod[randomComponent];

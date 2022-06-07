@@ -1,5 +1,6 @@
 import { FaGithub, FaLink } from 'react-icons/fa';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { motion } from 'framer-motion';
 
 export type ProjectMdxData = {
     source: SerializedProjectMdx;
@@ -26,7 +27,11 @@ function ProjectCard({ source, frontMatter }: ProjectCardProps) {
     const techList = frontMatter.tech.split(',').sort();
 
     return (
-        <div className="flex h-52 flex-col justify-between rounded bg-primary  p-5 shadow-xl">
+        <motion.div
+            className="flex h-52 flex-col justify-between rounded bg-primary  p-5 shadow-xl"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}>
             <div>
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-bold lowercase">
@@ -59,17 +64,17 @@ function ProjectCard({ source, frontMatter }: ProjectCardProps) {
                     </span>
                 ))}
             </div>
-        </div>
+        </motion.div>
     );
 }
 
 export function Projects({ projects }: ProjectsProps) {
     return (
-        <section
+        <motion.section
             id="projects"
             className="flex h-full min-h-screen w-screen  flex-col items-center justify-center p-10 dark:bg-zinc-900">
-            <h1 className="pb-10 font-title text-6xl font-bold">
-                stuff I've made
+            <h1 className="self-start pb-10 font-title text-6xl font-bold">
+                stuff I&apos;ve made
             </h1>
             <div className=" grid w-full items-center justify-center gap-10 auto-fill-cols-64 lg:auto-fill-cols-96">
                 {projects.map((p) => (
@@ -79,6 +84,6 @@ export function Projects({ projects }: ProjectsProps) {
                     <ProjectCard key={p.frontMatter.title} {...p} />
                 ))}
             </div>
-        </section>
+        </motion.section>
     );
 }
