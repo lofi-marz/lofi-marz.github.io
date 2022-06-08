@@ -208,7 +208,6 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
         layers.set(v.y, layer);
     });
     const sortedVertices: Vector3[] = [];
-    console.log(layers);
     layers.forEach((l) => {
         sortedVertices.push(
             ...l.sort((a, b) => {
@@ -219,8 +218,6 @@ function generateIcosphere(radius: number, divisions = 3): Vector3[] {
         );
     });
 
-    console.log(sortedVertices[0]);
-    console.log(sortedVertices[sortedVertices.length - 1]);
     return sortedVertices;
 }
 
@@ -249,8 +246,6 @@ export const WebGlTestSketch: React.FC = () => {
             hue1 = hue2;
             hue2 = temp;
         }
-        console.log(hue1);
-        console.log(hue2);
     };
 
     const draw = (p5: P5) => {

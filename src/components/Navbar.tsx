@@ -8,7 +8,7 @@ type NavItemProps = React.DetailedHTMLProps<
 > &
     WithChildrenProps;
 
-function NavItem({ href, children, target }: NavItemProps) {
+function NavItem({ href, children, target, className }: NavItemProps) {
     return (
         <motion.li
             variants={{
@@ -16,7 +16,8 @@ function NavItem({ href, children, target }: NavItemProps) {
                 show: { opacity: 1 },
             }}
             initial="hidden"
-            animate="show">
+            animate="show"
+            className={classNames('', className)}>
             <a href={href} target={target}>
                 {children}
             </a>
@@ -45,11 +46,13 @@ export const Navbar = (): JSX.Element => {
                 animate="show"
                 className="flex gap-10 px-10">
                 <NavItem href="#home">home</NavItem>
-                <NavItem href="#home">about</NavItem>
-
+                <NavItem href="#about">about</NavItem>
                 <NavItem href="#projects">projects</NavItem>
 
-                <NavItem href="Omari Thompson-Edwards CV.pdf" target="_blank">
+                <NavItem
+                    href="Omari Thompson-Edwards CV.pdf"
+                    target="_blank"
+                    className="text-primary">
                     cv
                 </NavItem>
             </motion.ul>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { WithChildrenProps } from 'types';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 type LayoutProps = WithChildrenProps;
 
@@ -37,10 +37,8 @@ export function Layout({ children }: LayoutProps) {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
 
-                <main className="flex min-h-screen w-screen grow flex-col dark:bg-zinc-900 dark:text-white">
-                    <AnimatePresence>
-                        {loading ? <LoadingScreen /> : children}
-                    </AnimatePresence>
+                <main className="min-h-screen w-screen grow dark:bg-zinc-900 dark:text-white">
+                    {children}
                 </main>
             </div>
         </div>
