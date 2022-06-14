@@ -9,7 +9,8 @@ import { Navbar } from '../components/Navbar';
 import React from 'react';
 import { BackgroundSketch } from '../components/BackgroundSketch';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
-import { useMediaQuery } from 'hooks/useMediaQuery';
+import classNames from 'classnames';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 type HomePageProps = {
     projects: ProjectMdxData[];
@@ -20,25 +21,29 @@ type AnimatedBackgroundSketchProps = {
 };
 
 function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
-    //I don't like this
     const sectionCount = 3;
 
     const { scrollYProgress } = useViewportScroll();
     const x = useTransform(
         scrollYProgress,
         [0, sectionCount <= 2 ? 1 : 1 / sectionCount],
-        ['0%', '50%']
+        ['0%', '25%']
     );
 
     return (
-        <div className="-z-1 fixed flex h-screen w-screen items-center justify-center">
-            <motion.div
-                layout
-                className="p-10 lg:w-1/2"
-                style={animate ? { x } : {}}>
+        <motion.section
+            className={classNames(
+                'absolute flex h-[calc(200vh+4rem)] w-screen items-start justify-center'
+            )}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            style={animate ? { x } : {}}
+            layout>
+            <div className="sticky top-0 flex h-screen w-screen items-center justify-center">
                 <BackgroundSketch />
-            </motion.div>
-        </div>
+            </div>
+        </motion.section>
     );
 }
 
@@ -48,11 +53,12 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
     return (
         <React.Fragment key="home">
             <AnimatedBackgroundSketch animate={isDesktop} />
-            <Intro key="intro" />
-            <Navbar key="nav" />
-            <About />
-
-            <Projects key="projects" projects={projects} />
+            <div>
+                <Intro />
+                <Navbar />
+                <About />
+                <Projects projects={projects} />
+            </div>
         </React.Fragment>
     );
 };

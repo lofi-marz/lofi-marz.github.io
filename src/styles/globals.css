@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    @apply font-text w-screen
+    @apply font-text bg-zinc-900
 }
 
 
@@ -18,12 +18,22 @@ h1 {
     @apply font-title
 }
 
+section {
+    @apply px-10
+}
 
 .react-p5 {
-  @apply w-full bg-zinc-900 invert dark:invert-0 max-h-screen !important
+  @apply w-full bg-zinc-900 max-h-screen lg:w-1/2 !important
 }
 
 .react-p5 canvas {
   @apply h-full w-full !important
 }
+
+@layer utilities {
+    .text-gradient{
+        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important
+    }
+}
+
 

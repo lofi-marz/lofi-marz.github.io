@@ -27,7 +27,7 @@ export function Toggle() {
                 <FaMoon />
             </div>
             <motion.div
-                className="z-10 aspect-square h-10 rounded-full bg-white"
+                className=" aspect-square h-10 rounded-full bg-white"
                 onClick={() => setIsOn((isOn) => !isOn)}
                 layout
                 transition={spring}

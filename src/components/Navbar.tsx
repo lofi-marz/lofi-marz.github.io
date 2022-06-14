@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import { WithChildrenProps } from '../types';
+import classNames from 'classnames';
 
 type NavItemProps = React.DetailedHTMLProps<
     React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -17,7 +18,10 @@ function NavItem({ href, children, target, className }: NavItemProps) {
             }}
             initial="hidden"
             animate="show"
-            className={classNames('', className)}>
+            className={classNames(
+                'transition-all hover:text-primary',
+                className
+            )}>
             <a href={href} target={target}>
                 {children}
             </a>
@@ -37,7 +41,7 @@ export const Navbar = (): JSX.Element => {
     };
     return (
         <motion.header
-            className="sticky top-0 z-10 flex h-16 w-full items-center justify-center font-title text-xl opacity-95 shadow dark:bg-zinc-900 dark:text-white"
+            className="sticky top-0 flex h-16 w-full items-center justify-center font-title text-xl opacity-95 shadow dark:bg-zinc-900 dark:text-white"
             transition={{ staggerChildren: 5 }}
             key="nav">
             <motion.ul
@@ -52,7 +56,7 @@ export const Navbar = (): JSX.Element => {
                 <NavItem
                     href="Omari Thompson-Edwards CV.pdf"
                     target="_blank"
-                    className="text-primary">
+                    className="text-gradient">
                     cv
                 </NavItem>
             </motion.ul>

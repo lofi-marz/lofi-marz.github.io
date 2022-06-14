@@ -23,7 +23,6 @@ export type ProjectsProps = {
 };
 
 function ProjectCard({ source, frontMatter }: ProjectCardProps) {
-    console.log(frontMatter);
     const techList = frontMatter.tech.split(',').sort();
 
     return (
@@ -73,11 +72,11 @@ export function Projects({ projects }: ProjectsProps) {
         <motion.section
             id="projects"
             key="projects"
-            className="flex h-full min-h-screen w-screen  flex-col items-center justify-center p-10 dark:bg-zinc-900">
+            className="z-10 flex h-full min-h-screen w-full flex-col items-center justify-center p-10 dark:bg-zinc-900">
             <h1 className="self-start pb-10 font-title text-6xl font-bold">
                 stuff I&apos;ve made
             </h1>
-            <div className=" grid w-full items-center justify-center gap-10 auto-fill-cols-64 lg:auto-fill-cols-96">
+            <div className="grid w-full items-center justify-center gap-10 auto-fill-cols-64 lg:auto-fill-cols-96">
                 {projects.map((p) => (
                     <ProjectCard key={p.frontMatter.title} {...p} />
                 ))}

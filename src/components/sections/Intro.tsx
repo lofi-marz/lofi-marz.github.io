@@ -1,19 +1,28 @@
+import { motion } from 'framer-motion';
 import { FaChevronDown } from 'react-icons/fa';
 
 function Chevron() {
-    return <FaChevronDown className="absolute mt-20" />;
+    return (
+        <a className="absolute mt-32" href="#about">
+            <FaChevronDown />
+        </a>
+    );
 }
 
 export function Intro() {
     //[calc(100vh-4rem)]
     return (
-        <section
+        <motion.section
             id="home"
-            className="flex h-screen items-center justify-center">
-            <div className="z-10 flex flex-col items-center justify-center font-title text-5xl font-bold mix-blend-difference">
+            className="flex h-screen items-center justify-center"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ ease: 'easeOut' }}
+            viewport={{ once: true }}>
+            <div className="flex flex-col items-center justify-center font-title text-5xl font-bold mix-blend-difference">
                 hi, I&apos;m omari
                 <Chevron />
             </div>
-        </section>
+        </motion.section>
     );
 }
