@@ -211,7 +211,7 @@ export function RotatingIcosphere(props: JSX.IntrinsicElements['mesh']) {
         <mesh ref={ref} rotation={[0, 0, Math.PI / 4]}>
             <ambientLight />
             {vertices.map(({ x, y, z }) => {
-                const val = p5.map(
+                /*const val = p5.map(
                     p5.sin(yOffset + elapsedTime),
                     -1,
                     1,
@@ -220,7 +220,7 @@ export function RotatingIcosphere(props: JSX.IntrinsicElements['mesh']) {
                 );
                 //const index = p5.map(i, 0, vertices.length, 0,255);
 
-                p5.fill(p5.color(val, 200, 223));
+                p5.fill(p5.color(val, 200, 223));*/
                 return (
                     <mesh key={`${x}${y}${z}`} position={[x, y, z]}>
                         <sphereBufferGeometry args={[3, 3, 3]} />

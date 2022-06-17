@@ -19,7 +19,7 @@ export function Intro() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ ease: 'easeOut' }}
             viewport={{ once: true }}>
-            <div className="flex flex-col items-center justify-center font-title text-5xl font-bold mix-blend-difference">
+            <div className="flex flex-col items-center justify-center font-title text-5xl font-bold mix-blend-difference invert dark:invert-0">
                 hi, I&apos;m omari
                 <Chevron />
             </div>
