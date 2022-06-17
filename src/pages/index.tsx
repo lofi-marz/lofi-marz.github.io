@@ -5,12 +5,12 @@ import { getAllProjectFilePaths } from '../utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import { Navbar } from '../components/Navbar';
 import React from 'react';
-import { BackgroundSketch } from '../components/BackgroundSketch';
+import { BackgroundSketch } from 'components/BackgroundSketch';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import classNames from 'classnames';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { Navbar } from 'components/Navbar';
 
 type HomePageProps = {
     projects: ProjectMdxData[];
@@ -40,7 +40,7 @@ function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
             viewport={{ once: true }}
             style={animate ? { x } : {}}
             layout>
-            <div className="sticky top-0 flex h-screen w-screen items-center justify-center">
+            <div className="absolute top-0 flex h-screen w-screen items-center justify-center lg:sticky">
                 <BackgroundSketch />
             </div>
         </motion.section>

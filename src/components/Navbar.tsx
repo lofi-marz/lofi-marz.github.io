@@ -18,10 +18,7 @@ function NavItem({ href, children, target, className }: NavItemProps) {
             }}
             initial="hidden"
             animate="show"
-            className={classNames(
-                'transition-all hover:text-primary',
-                className
-            )}>
+            className={classNames('mx-5 transition-all', className)}>
             <a href={href} target={target}>
                 {children}
             </a>
@@ -48,7 +45,7 @@ export const Navbar = (): JSX.Element => {
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="flex gap-10 px-10">
+                className="flex lg:gap-10">
                 <NavItem href="#home">home</NavItem>
                 <NavItem href="#about">about</NavItem>
                 <NavItem href="#projects">projects</NavItem>
@@ -56,7 +53,7 @@ export const Navbar = (): JSX.Element => {
                 <NavItem
                     href="Omari Thompson-Edwards CV.pdf"
                     target="_blank"
-                    className="text-gradient">
+                    className="text-gradient link">
                     cv
                 </NavItem>
             </motion.ul>

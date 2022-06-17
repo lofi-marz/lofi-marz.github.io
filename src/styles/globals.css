@@ -30,10 +30,31 @@ section {
   @apply h-full w-full !important
 }
 
+
+
 @layer utilities {
-    .text-gradient{
-        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent !important
+
+    .bg-gradient {
+        @apply bg-gradient-to-r from-primary to-secondary;
+    }
+
+    .text-gradient {
+        @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    }
+
+    .text-gradient-none {
+        @apply bg-none bg-clip-border;
+    }
+
+    .text-content {
+        @apply text-justify font-text font-light;
+    }
+
+    .link {
+        @apply bg-gradient bg-clip-text text-transparent hover:underline hover:text-primary hover:text-gradient-none transition-all;
     }
 }
+
+
 
 
