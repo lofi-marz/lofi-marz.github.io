@@ -21,14 +21,14 @@ type AnimatedBackgroundSketchProps = {
 };
 
 function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
-    const sectionCount = 3;
+    /*const sectionCount = 3;
 
     const { scrollYProgress } = useViewportScroll();
     const x = useTransform(
         scrollYProgress,
         [0, sectionCount <= 2 ? 1 : 1 / sectionCount],
         ['0%', '25%']
-    );
+    );*/
 
     return (
         <motion.section
@@ -38,9 +38,8 @@ function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            style={animate ? { x } : {}}
             layout>
-            <div className="absolute top-0 flex h-screen w-screen items-center justify-center lg:sticky">
+            <div className="absolute top-0 flex h-screen w-screen items-center justify-center">
                 <BackgroundSketch />
             </div>
         </motion.section>
