@@ -47,11 +47,15 @@ section {
     }
 
     .text-content {
-        @apply text-justify font-text font-light;
+        @apply font-text font-light;
     }
 
     .link {
         @apply bg-gradient bg-clip-text text-transparent hover:underline hover:text-primary hover:text-gradient-none transition-all;
+    }
+
+    .solid-shadow {
+
     }
 }
 
