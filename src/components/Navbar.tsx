@@ -38,7 +38,7 @@ export const Navbar = (): JSX.Element => {
     };
     return (
         <motion.header
-            className="sticky top-0 flex h-16 w-full items-center justify-center font-title text-xl opacity-95 shadow dark:bg-zinc-900 dark:text-white"
+            className="opacity-99 sticky top-0 z-10 flex h-16 w-full items-center justify-center font-title text-xl shadow dark:bg-zinc-900 dark:text-white"
             transition={{ staggerChildren: 5 }}
             key="nav">
             <motion.ul

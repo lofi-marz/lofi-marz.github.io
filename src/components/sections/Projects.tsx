@@ -12,6 +12,7 @@ type ProjectFrontmatter = {
     description: string;
     tech: string;
     link: string;
+    github: string;
 };
 
 type SerializedProjectMdx = MDXRemoteSerializeResult<Record<string, unknown>>;
@@ -26,7 +27,7 @@ function ProjectCard({ source, frontMatter }: ProjectCardProps) {
     const techList = frontMatter.tech
         .split(',')
         .sort((a, b) => a.localeCompare(b));
-
+    console.log(frontMatter);
     return (
         <motion.div
             className="flex h-60 flex-col justify-between rounded bg-primary p-5 shadow-xl"
@@ -41,12 +42,12 @@ function ProjectCard({ source, frontMatter }: ProjectCardProps) {
                     <span className="flex gap-2">
                         <a
                             className="text-2xl transition-all"
-                            href="localhost:3005">
+                            href={frontMatter.github}>
                             <FaGithub />
                         </a>
                         <a
                             className="text-2xl transition-all"
-                            href="localhost:3005">
+                            href={frontMatter.link}>
                             <FaLink />
                         </a>
                     </span>

@@ -38,8 +38,9 @@ function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            transition={{ delay: 1 }}
             layout>
-            <div className="absolute top-0 flex h-screen w-screen items-center justify-center">
+            <div className="absolute top-0 flex h-screen w-screen items-center justify-center p-10">
                 <BackgroundSketch />
             </div>
         </motion.section>

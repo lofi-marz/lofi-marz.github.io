@@ -64,9 +64,9 @@ export function About() {
                 </div>
             </div>
             <div className="flex w-full items-center md:h-full md:w-1/2">
-                <div className="m-auto border-l-8 border-primary pl-3 md:w-96 md:max-w-[50vw]">
+                <div className="m-auto w-full max-w-sm border-l-8 border-primary pl-3 md:w-80 lg:w-96">
                     <img
-                        className="saturate-90"
+                        className="saturate-0"
                         src="me.jpg"
                         alt="Picture of me"
                     />
