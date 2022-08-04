@@ -80,6 +80,8 @@ export const getStaticProps: GetStaticProps = async () => {
     });
     const projects = await Promise.all(
         paths.map(async (p) => {
+            const pathArray = p.split('/');
+            const name = pathArray[pathArray.length - 1];
             //Load the file contents
             const source = fs.readFileSync(path.join(p, 'project.mdx'));
             //Parse it into front matter and the actual content
@@ -100,6 +102,7 @@ export const getStaticProps: GetStaticProps = async () => {
             return {
                 source: mdxSource,
                 frontMatter: data,
+                name,
             };
         })
     );
