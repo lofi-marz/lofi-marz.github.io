@@ -24,7 +24,7 @@ export function Intro() {
     return (
         <motion.section
             id="home"
-            className="flex h-screen w-screen flex-col items-center justify-center"
+            className="flex h-screen w-full flex-col items-center justify-center"
             initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ ease: 'easeOut' }}

@@ -32,7 +32,7 @@ export function Layout({ children }: LayoutProps) {
 
     //AnimatePresence doesn't actually work with children there, so no exit animations
     return (
-        <div className="dark h-full min-h-screen w-screen">
+        <div className="dark h-full min-h-screen w-full">
             <div className="flex flex-col items-center justify-center">
                 <Head>
                     <title>hi</title>

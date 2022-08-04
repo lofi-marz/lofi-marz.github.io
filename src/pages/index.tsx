@@ -11,7 +11,8 @@ import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import classNames from 'classnames';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navbar } from 'components/Navbar';
-
+import path from 'path';
+import img from '/me.jpg';
 type HomePageProps = {
     projects: ProjectMdxData[];
 };
@@ -68,11 +69,19 @@ export const getStaticProps: GetStaticProps = async () => {
     // Get the file paths
     const paths = getAllProjectFilePaths();
     console.log(paths);
-
+    //TODO: Maybe its time to switch to a headless CMS lol
+    paths.forEach((p) => {
+        const pathArray = p.split('/');
+        const fileName = pathArray[pathArray.length - 1];
+        fs.copyFileSync(
+            path.join(p, 'desktop.png'),
+            path.join(process.cwd(), 'public', `${fileName}-desktop.png`)
+        );
+    });
     const projects = await Promise.all(
         paths.map(async (p) => {
             //Load the file contents
-            const source = fs.readFileSync(p);
+            const source = fs.readFileSync(path.join(p, 'project.mdx'));
             //Parse it into front matter and the actual content
 
             const { content, data } = matter(source);
