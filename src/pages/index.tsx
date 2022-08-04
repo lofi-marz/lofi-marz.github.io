@@ -1,6 +1,12 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-import { About, Intro, ProjectMdxData, Projects } from 'components/sections';
+import {
+    About,
+    Contact,
+    Intro,
+    ProjectMdxData,
+    Projects,
+} from 'components/sections';
 import { getAllProjectFilePaths } from '../utils';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -58,6 +64,7 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
                 <Navbar />
                 <About />
                 <Projects projects={projects} />
+                <Contact />
             </div>
         </React.Fragment>
     );

@@ -108,32 +108,6 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
             </div>
         </motion.div>
     );
-
-    return (
-        <motion.div
-            className="flex h-60 w-full flex-col justify-between rounded p-5 shadow md:shadow-none"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}>
-            <div className="h-96 w-48">
-                <Image src="/portfolio-desktop.png" layout="fill" />
-            </div>
-            <div>
-                <div className="prose prose-sm prose-invert bg-red-400 py-3 text-white">
-                    <MDXRemote {...source} />
-                </div>
-            </div>
-            <ul className="flex w-full flex-wrap gap-1 px-4 text-sm">
-                {techList.map((t) => (
-                    <li
-                        key={t}
-                        className="rounded bg-white p-1 px-2 font-mono text-primary transition-all">
-                        {t}
-                    </li>
-                ))}
-            </ul>
-        </motion.div>
-    );
 }
 
 export function Projects({ projects }: ProjectsProps) {

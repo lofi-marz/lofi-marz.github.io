@@ -84,7 +84,7 @@ export const RotatingWavesSketch: React.FC = () => {
 
     const draw = (p5: P5) => {
         elapsedTime += p5.deltaTime / 1000;
-        const bg = p5.color(colors['bg-dark'][900]);
+        const bg = p5.color(colors['dark'][900]);
         //bg.setAlpha(20);
 
         p5.background(bg);
