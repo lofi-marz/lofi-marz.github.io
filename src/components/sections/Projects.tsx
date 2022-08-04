@@ -1,6 +1,7 @@
 import { FaGithub, FaLink } from 'react-icons/fa';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { motion } from 'framer-motion';
+import { NavbarSpacer } from '../Navbar';
 
 export type ProjectMdxData = {
     source: SerializedProjectMdx;
@@ -76,6 +77,7 @@ export function Projects({ projects }: ProjectsProps) {
             id="projects"
             key="projects"
             className="z-10 flex h-full min-h-screen w-full flex-col items-center justify-center p-10 dark:bg-zinc-900">
+            <NavbarSpacer></NavbarSpacer>
             <h1 className="mb-10 self-start border-l-8 border-primary pl-5 font-title text-6xl font-bold">
                 stuff I&apos;ve made
             </h1>

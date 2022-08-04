@@ -45,7 +45,7 @@ class Layer {
 
         p5.beginShape();
         p5.strokeJoin(p5.ROUND);
-        p5.strokeWeight(6);
+        p5.strokeWeight(8);
         for (let theta = 0; theta < 2 * p5.TAU; theta += p5.TAU / 1000) {
             const offsetAngle = w * theta - w * s * phase;
             const val =
@@ -84,11 +84,15 @@ export const RotatingWavesSketch: React.FC = () => {
 
     const draw = (p5: P5) => {
         elapsedTime += p5.deltaTime / 1000;
-        p5.background(0, 20);
+        const bg = p5.color(colors['bg-dark'][900]);
+        //bg.setAlpha(20);
+
+        p5.background(bg);
+        //console.log(bg);
         p5.translate(p5.width / 2, p5.height / 2);
         p5.noFill();
         p5.stroke(255, 200);
-        p5.strokeWeight(4);
+        p5.strokeWeight(16);
         //p5.fill(255,200);
         layers.forEach((l) => l.draw(p5, elapsedTime));
 

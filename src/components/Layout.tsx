@@ -40,9 +40,9 @@ export function Layout({ children }: LayoutProps) {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
 
-                <main className="flex min-h-screen w-screen grow flex-col bg-zinc-200 text-zinc-900 dark:bg-zinc-900 dark:text-white">
+                <main className="flex min-h-screen w-full grow flex-col bg-zinc-200 text-zinc-900 dark:bg-dark-900 dark:text-white">
                     <AnimatePresence>
-                        {<motion.div key="children">{children}</motion.div>}
+                        <motion.div key="children">{children}</motion.div>
                     </AnimatePresence>
                 </main>
             </div>

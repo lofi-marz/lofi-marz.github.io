@@ -14,12 +14,13 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                title: ['Inter', ...defaultTheme.fontFamily.sans],
+                title: ['Poppins', ...defaultTheme.fontFamily.sans],
                 text: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 primary: colors.red[500],
-                secondary: colors.orange[500],
+                secondary: colors.pink[500],
+                dark: colors.zinc,
             },
         },
     },

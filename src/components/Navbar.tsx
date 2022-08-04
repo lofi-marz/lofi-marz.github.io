@@ -26,7 +26,11 @@ function NavItem({ href, children, target, className }: NavItemProps) {
     );
 }
 
-export const Navbar = (): JSX.Element => {
+export function NavbarSpacer() {
+    return <div className="h-16 w-full"></div>;
+}
+
+export function Navbar() {
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -38,7 +42,7 @@ export const Navbar = (): JSX.Element => {
     };
     return (
         <motion.header
-            className="opacity-99 sticky top-0 z-10 flex h-16 w-full items-center justify-center font-title text-xl shadow dark:bg-zinc-900 dark:text-white"
+            className="opacity-99 sticky top-0 z-10 flex h-16 w-full items-center justify-center font-title text-xl dark:bg-dark-900 dark:text-white"
             transition={{ staggerChildren: 5 }}
             key="nav">
             <motion.ul
@@ -53,10 +57,10 @@ export const Navbar = (): JSX.Element => {
                 <NavItem
                     href="Omari Thompson-Edwards CV.pdf"
                     target="_blank"
-                    className="text-gradient link">
+                    className="text-gradient link font-bold">
                     cv
                 </NavItem>
             </motion.ul>
         </motion.header>
     );
-};
+}

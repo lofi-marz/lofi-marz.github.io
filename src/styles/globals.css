@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +23,7 @@ section {
 }
 
 .react-p5 {
-  @apply w-full max-h-screen lg:w-1/2 !important
+  @apply w-full max-h-screen !important
 }
 
 .react-p5 canvas {

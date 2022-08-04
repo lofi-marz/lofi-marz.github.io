@@ -18,7 +18,7 @@ export function BackgroundSketch() {
 
                 const randomComponent =
                     sketches[Math.floor(Math.random() * sketches.length)];*/
-                const randomComponent = 'WebGlTestSketch';
+                const randomComponent = 'PolygonMorphSketch';
                 return mod[randomComponent];
             }),
         {

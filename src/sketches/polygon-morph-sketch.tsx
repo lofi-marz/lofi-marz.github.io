@@ -2,6 +2,7 @@ import React from 'react';
 import P5 from 'p5';
 import Sketch from 'react-p5';
 import { sketchConfig } from './config';
+import { colors } from '../utils/theme';
 
 interface Vertex {
     x: number;
@@ -54,7 +55,6 @@ export const PolygonMorphSketch: React.FC = () => {
     let next = generateShape(nextSides, res);
 
     const setup = (p5: P5, canvasParentRef: Element) => {
-        p5.colorMode(p5.HSB, 255);
         //p5.createCanvas(p5.windowWidth * SCALE, p5.windowHeight * SCALE).parent(canvasParentRef);
         p5.createCanvas(
             sketchConfig.resolution.w,
@@ -99,13 +99,41 @@ export const PolygonMorphSketch: React.FC = () => {
             p5.fill('white');
         } else {
             p5.noFill();
-            p5.strokeWeight(10);
+            p5.strokeWeight(20);
             p5.strokeJoin(p5.ROUND);
 
             //const hue = 200 + 55 * (p5.sin(progress * 2 * Math.PI) + 1);
             //p5.stroke(hue, 200, 223);
+            const angle = p5.map(progress, 0, 1, 0, p5.PI);
+            //console.log(progress.toFixed(2), angle.toFixed(2));
+            /*const fromColor = p5.lerpColor(
+                colors.primary,
+                colors.secondary,
+                progress
+            );
+            const toColor = p5.lerpColor(
+                colors.primary,
+                colors.secondary,
+                progress
+            );*/
 
-            p5.stroke('white');
+            const color = p5.lerpColor(
+                p5.color(colors.primary),
+                p5.color(colors.secondary),
+                (Math.sin(
+                    p5.map(
+                        progress * Math.abs(currSides - nextSides),
+                        0,
+                        7,
+                        0,
+                        1,
+                        true
+                    ) / 2
+                ) +
+                    1) /
+                    2
+            );
+            p5.stroke(color);
 
             /*const currHue = p5.color(p5.map(currSides, 0, 10, 0, 255), 200, 200);
             const nextHue = p5.color(p5.map(nextSides, 0, 10, 0, 255), 200, 200);*/

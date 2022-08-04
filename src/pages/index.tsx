@@ -52,7 +52,6 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
 
     return (
         <React.Fragment key="home">
-            <AnimatedBackgroundSketch animate={isDesktop} />
             <div>
                 <Intro />
                 <Navbar />
