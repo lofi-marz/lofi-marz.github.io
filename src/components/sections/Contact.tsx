@@ -8,7 +8,6 @@ type ContactProps = {
     onViewportLeave: () => void;
 };
 export function Contact({ onViewportEnter, onViewportLeave }: ContactProps) {
-    const [ctaHover, setCtaHover] = useState(false);
     return (
         <motion.footer
             className="flex flex-col gap-10 px-10 py-20"
@@ -25,24 +24,12 @@ export function Contact({ onViewportEnter, onViewportLeave }: ContactProps) {
                     hi, send me a message and I will get back to you!
                 </p>
 
-                <motion.a
-                    layout
-                    onMouseEnter={() => setCtaHover(true)}
-                    onMouseLeave={() => setCtaHover(false)}
+                <a
                     href="mailto:othompsonedwards@gmail.com"
-                    className="flex items-center gap-2 rounded bg-dark-800 px-5 py-2 text-2xl shadow transition-all">
-                    <AnimatePresence>
-                        <motion.h1 key="cta-text">Say Hi! </motion.h1>
-                        {ctaHover && (
-                            <motion.span
-                                key="cta-icon"
-                                initial={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}>
-                                <FaChevronRight />
-                            </motion.span>
-                        )}
-                    </AnimatePresence>
-                </motion.a>
+                    className="flex items-center gap-2 rounded bg-dark-800 px-5 py-2 text-2xl shadow transition-all hover:-translate-y-1 active:brightness-50 ">
+                    Say Hi!
+                    <FaChevronRight />
+                </a>
             </div>
         </motion.footer>
     );
