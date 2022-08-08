@@ -11,9 +11,14 @@ import { getAllProjectFilePaths } from '../utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import React from 'react';
+import React, { useState } from 'react';
 import { BackgroundSketch } from 'components/BackgroundSketch';
-import { motion, useTransform, useViewportScroll } from 'framer-motion';
+import {
+    AnimateSharedLayout,
+    motion,
+    useTransform,
+    useViewportScroll,
+} from 'framer-motion';
 import classNames from 'classnames';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navbar } from 'components/Navbar';
@@ -56,17 +61,30 @@ function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
 
 const Home: NextPage<HomePageProps> = ({ projects }) => {
     const isDesktop = useMediaQuery('lg');
-
+    const [contactVisible, setContactVisible] = useState(false);
     return (
-        <React.Fragment key="home">
-            <div>
-                <Intro />
-                <Navbar />
-                <About />
-                <Projects projects={projects} />
-                <Contact />
-            </div>
-        </React.Fragment>
+        <motion.div
+            className="flex flex-col items-center justify-center  bg-primary"
+            layout>
+            <AnimateSharedLayout>
+                <motion.div
+                    className="w-full origin-bottom bg-dark-900"
+                    initial={{ scale: 1 }}
+                    animate={{ scale: contactVisible ? 0.8 : 1 }}>
+                    <Intro />
+                    {!contactVisible && <Navbar />}
+                    <About />
+                    <Projects projects={projects} />
+                </motion.div>
+                <Contact
+                    onViewportEnter={() => {
+                        console.log('Visible');
+                        setContactVisible(true);
+                    }}
+                    onViewportLeave={() => setContactVisible(false)}
+                />
+            </AnimateSharedLayout>
+        </motion.div>
     );
 };
 

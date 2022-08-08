@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import { motion, useScroll } from 'framer-motion';
+import React, { useState } from 'react';
 import { WithChildrenProps } from '../types';
 import classNames from 'classnames';
 
@@ -31,6 +31,14 @@ export function NavbarSpacer() {
 }
 
 export function Navbar() {
+    const { scrollYProgress } = useScroll();
+
+    const [scrollingDown, setScrollingDown] = useState(true);
+
+    scrollYProgress.onChange((v) =>
+        setScrollingDown(scrollYProgress.getVelocity() <= 0)
+    );
+
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -44,6 +52,9 @@ export function Navbar() {
         <motion.header
             className="opacity-99 sticky top-0 z-10 flex h-16 w-full items-center justify-center font-title text-xl dark:bg-dark-900 dark:text-white"
             transition={{ staggerChildren: 5 }}
+            variants={container}
+            initial="hidden"
+            animate={scrollingDown ? 'hidden' : 'show'}
             key="nav">
             <motion.ul
                 variants={container}
