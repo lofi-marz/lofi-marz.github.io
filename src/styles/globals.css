@@ -32,6 +32,11 @@ section {
 }
 
 
+@layer components {
+    .table {
+
+    }
+}
 
 @layer utilities {
 

@@ -10,7 +10,7 @@ function Chevron() {
 export function About() {
     //[calc(100vh-4rem)]
     return (
-        <section className="flex h-screen flex-col" id="about">
+        <section className="flex h-screen flex-col " id="about">
             <NavbarSpacer></NavbarSpacer>
             <div className="flex h-screen flex-col-reverse md:flex-row">
                 <div className="flex flex-col items-center justify-center dark:bg-zinc-900 md:w-1/2 lg:h-screen">
@@ -19,18 +19,18 @@ export function About() {
                     </h1>
                     <div className="text-content prose mix-blend-difference dark:prose-invert dark:text-white">
                         Hi, I&apos;m Omari! I&apos;m a Front-End Developer from
-                        England, currently studying at the{' '}
+                        England, currently studying at the
                         <a
                             href="https://www.nottinghampost.com/news/nottingham-news/picture-shows-huge-gaggle-geese-3383819"
                             className="link">
                             University of Nottingham
                         </a>
-                        {'. '}I like making fun,{' '}
+                        I like making fun,
                         <a
                             className="link"
                             href="https://p5js-experiments-gamma.vercel.app/">
                             creative
-                        </a>{' '}
+                        </a>
                         things with code.
                         <p className="mx-auto w-fit">
                             Feel free to contact me at any of these!
