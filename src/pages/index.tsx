@@ -68,7 +68,7 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
             layout>
             <AnimateSharedLayout>
                 <motion.div
-                    className="w-full origin-bottom bg-dark-900"
+                    className="w-full origin-bottom bg-dark-900 pb-48"
                     initial={{ scale: 1 }}
                     animate={{ scale: contactVisible ? 0.8 : 1 }}>
                     <Intro />
