@@ -23,13 +23,15 @@ export function About() {
                         <a
                             href="https://www.nottinghampost.com/news/nottingham-news/picture-shows-huge-gaggle-geese-3383819"
                             className="link">
+                            {' '}
                             University of Nottingham
                         </a>
-                        I like making fun,
+                        {'. '}I like making fun,
                         <a
                             className="link"
                             href="https://p5js-experiments-gamma.vercel.app/">
-                            creative
+                            {' '}
+                            creative{' '}
                         </a>
                         things with code.
                         <p className="mx-auto w-fit">
