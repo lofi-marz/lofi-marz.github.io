@@ -1,10 +1,11 @@
-import { FaGithub, FaLink } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaGithub, FaLink } from 'react-icons/fa';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { motion } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import { NavbarSpacer } from '../Navbar';
 import Image from 'next/image';
 import { WithChildrenProps } from '../../types';
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 
 export type ProjectMdxData = {
     source: SerializedProjectMdx;
@@ -48,6 +49,57 @@ function DesktopFrame({
     );
 }
 
+function ProjectDescription({
+    description,
+    children,
+}: { description: string } & WithChildrenProps) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <motion.div
+            layout
+            className="prose prose-sm prose-invert relative rounded text-white md:w-[120%] md:bg-dark-800 md:p-5">
+            <AnimatePresence>
+                {open ? (
+                    <motion.div
+                        key="content"
+                        className="flex w-full flex-col items-center justify-center text-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            delay: 0.5,
+                            default: { ease: 'linear' },
+                            duration: 1,
+                        }}>
+                        {children}
+                        <button
+                            onClick={() => setOpen((oldValue) => !oldValue)}>
+                            <FaChevronUp />
+                        </button>
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="description"
+                        className="flex w-full flex-row items-center justify-between"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            delay: 0.5,
+                            default: { ease: 'linear' },
+                            duration: 1,
+                        }}>
+                        <p>{description}</p>
+                        <button
+                            onClick={() => setOpen((oldValue) => !oldValue)}>
+                            <FaChevronDown />
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+}
+
 function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
     const techList = frontMatter.tech
         .split(',')
@@ -65,47 +117,58 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
             )}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}>
-            <div className="flex items-center justify-center md:w-1/2">
-                <DesktopFrame className="md:w-full">
-                    <img
-                        src={`/${name}-desktop.png`}
-                        className="aspect-[16/9] w-full"
-                        alt={`Preview screenshot for ${frontMatter.title}`}
-                    />
-                </DesktopFrame>
-            </div>
-            <div
-                className={classNames('flex flex-col gap-4 pt-4 md:w-1/2', {
-                    'md:items-end': !rightAligned,
-                })}>
-                <h1
-                    className={classNames('text-2xl font-bold lowercase', {
-                        'md:text-right': !rightAligned,
-                    })}>
-                    {frontMatter.title}
-                </h1>
-                <div className="prose prose-sm prose-invert rounded text-white md:w-[120%] md:bg-dark-800 md:p-5">
-                    {frontMatter.description}
-                </div>
-                <ul className="flex flex-wrap gap-4 text-sm opacity-90 md:px-5">
-                    {techList.map((t) => (
-                        <li
-                            key={t}
-                            className="rounded font-mono text-white saturate-50 transition-all">
-                            {t}
-                        </li>
-                    ))}
-                </ul>
-                <span className="mx-auto flex gap-4 px-5 text-xl md:mx-0">
-                    <a className="transition-all" href={frontMatter.github}>
-                        <FaGithub />
-                    </a>
-                    <a className="transition-all" href={frontMatter.link}>
-                        <FaLink />
-                    </a>
-                </span>
-            </div>
+            viewport={{ once: true }}
+            layout>
+            <AnimateSharedLayout>
+                <motion.div
+                    className="flex items-center justify-center md:w-1/2"
+                    layout>
+                    <DesktopFrame className="md:w-full">
+                        <img
+                            src={`/${name}-desktop.png`}
+                            className="aspect-[16/9] w-full"
+                            alt={`Preview screenshot for ${frontMatter.title}`}
+                        />
+                    </DesktopFrame>
+                </motion.div>
+
+                <motion.div
+                    layout
+                    className={classNames(
+                        'relative flex flex-col justify-center gap-4 overflow-visible pt-4 md:w-1/2',
+                        {
+                            'md:items-end': !rightAligned,
+                        }
+                    )}>
+                    <h1
+                        className={classNames('text-2xl font-bold lowercase', {
+                            'md:text-right': !rightAligned,
+                        })}>
+                        {frontMatter.title}
+                    </h1>
+
+                    <ProjectDescription description={frontMatter.description}>
+                        <MDXRemote {...source} />
+                    </ProjectDescription>
+                    <ul className="flex flex-wrap gap-4 text-sm opacity-90 md:px-5">
+                        {techList.map((t) => (
+                            <li
+                                key={t}
+                                className="rounded font-mono text-white saturate-50 transition-all">
+                                {t}
+                            </li>
+                        ))}
+                    </ul>
+                    <span className="mx-auto flex gap-4 px-5 text-xl md:mx-0">
+                        <a className="transition-all" href={frontMatter.github}>
+                            <FaGithub />
+                        </a>
+                        <a className="transition-all" href={frontMatter.link}>
+                            <FaLink />
+                        </a>
+                    </span>
+                </motion.div>
+            </AnimateSharedLayout>
         </motion.div>
     );
 }
