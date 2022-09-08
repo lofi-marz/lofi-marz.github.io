@@ -59,7 +59,7 @@ function ProjectDescription({
         <motion.div
             layout
             className="prose prose-sm prose-invert relative rounded text-white md:w-[120%] md:bg-dark-800 md:p-5">
-            <AnimatePresence>
+            <AnimatePresence exitBeforeEnter={true}>
                 {open ? (
                     <motion.div
                         key="content"
