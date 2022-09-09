@@ -36,7 +36,7 @@ export function Navbar() {
     const [scrollingDown, setScrollingDown] = useState(true);
 
     scrollYProgress.onChange((v) =>
-        setScrollingDown(scrollYProgress.getVelocity() <= 0)
+        setScrollingDown(scrollYProgress.getVelocity() > 0)
     );
 
     const container = {
