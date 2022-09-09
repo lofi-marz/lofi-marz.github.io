@@ -1,6 +1,11 @@
 import { FaChevronDown, FaChevronUp, FaGithub, FaLink } from 'react-icons/fa';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import {
+    AnimatePresence,
+    AnimateSharedLayout,
+    LayoutGroup,
+    motion,
+} from 'framer-motion';
 import { NavbarSpacer } from '../Navbar';
 import Image from 'next/image';
 import { WithChildrenProps } from '../../types';
@@ -119,7 +124,7 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             layout>
-            <AnimateSharedLayout>
+            <LayoutGroup>
                 <motion.div
                     className="flex items-center justify-center md:w-1/2"
                     layout>
@@ -140,35 +145,40 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
                             'md:items-end': !rightAligned,
                         }
                     )}>
-                    <h1
+                    <motion.h1
+                        layout
                         className={classNames('text-2xl font-bold lowercase', {
                             'md:text-right': !rightAligned,
                         })}>
                         {frontMatter.title}
-                    </h1>
+                    </motion.h1>
 
                     <ProjectDescription description={frontMatter.description}>
                         <MDXRemote {...source} />
                     </ProjectDescription>
-                    <ul className="flex flex-wrap gap-4 text-sm opacity-90 md:px-5">
+                    <motion.ul
+                        className="flex flex-wrap gap-4 text-sm opacity-90 md:px-5"
+                        layout>
                         {techList.map((t) => (
-                            <li
+                            <motion.li
                                 key={t}
                                 className="rounded font-mono text-white saturate-50 transition-all">
                                 {t}
-                            </li>
+                            </motion.li>
                         ))}
-                    </ul>
-                    <span className="mx-auto flex gap-4 px-5 text-xl md:mx-0">
+                    </motion.ul>
+                    <motion.span
+                        className="mx-auto flex gap-4 px-5 text-xl md:mx-0"
+                        layout>
                         <a className="transition-all" href={frontMatter.github}>
                             <FaGithub />
                         </a>
                         <a className="transition-all" href={frontMatter.link}>
                             <FaLink />
                         </a>
-                    </span>
+                    </motion.span>
                 </motion.div>
-            </AnimateSharedLayout>
+            </LayoutGroup>
         </motion.div>
     );
 }
@@ -178,7 +188,7 @@ export function Projects({ projects }: ProjectsProps) {
         <motion.section
             id="projects"
             key="projects"
-            className="z-10 flex h-full min-h-screen w-full flex-col items-center justify-center p-10 dark:bg-zinc-900">
+            className="z-10 flex h-full min-h-screen w-full w-2/3 flex-col items-center justify-center p-10 dark:bg-zinc-900">
             <NavbarSpacer></NavbarSpacer>
             <h1 className="mb-10 self-start border-l-8 border-primary pl-5 font-title text-6xl font-bold">
                 stuff I&apos;ve made

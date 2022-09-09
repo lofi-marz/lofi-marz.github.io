@@ -12,7 +12,8 @@ export function Contact({ onViewportEnter, onViewportLeave }: ContactProps) {
         <motion.footer
             className="flex flex-col gap-10 px-10 py-20"
             onViewportEnter={onViewportEnter}
-            onViewportLeave={onViewportLeave}>
+            onViewportLeave={onViewportLeave}
+            viewport={{ margin: '-800px 0px 0px 0px' }}>
             <h1 className="mb-10 self-start border-l-8 border-dark-800 pl-5 font-title text-6xl font-bold">
                 contact <br /> me
             </h1>

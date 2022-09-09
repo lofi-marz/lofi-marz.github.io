@@ -10,10 +10,12 @@ function Chevron() {
 export function About() {
     //[calc(100vh-4rem)]
     return (
-        <section className="flex h-screen flex-col " id="about">
+        <section
+            className="flex h-screen w-2/3 flex-col items-center justify-center"
+            id="about">
             <NavbarSpacer></NavbarSpacer>
-            <div className="flex h-screen flex-col-reverse md:flex-row">
-                <div className="flex flex-col items-center justify-center dark:bg-zinc-900 md:w-1/2 lg:h-screen">
+            <div className="flex h-screen w-full flex-col-reverse md:flex-row">
+                <div className="flex flex-col items-center justify-center dark:bg-zinc-900 md:w-3/5 lg:h-screen">
                     <h1 className="z-10 my-10 self-start border-l-8 border-primary pl-5 font-title text-5xl font-bold">
                         about me
                     </h1>

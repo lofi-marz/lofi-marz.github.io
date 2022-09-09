@@ -64,13 +64,14 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
     const [contactVisible, setContactVisible] = useState(false);
     return (
         <motion.div
-            className="flex flex-col items-center justify-center  bg-primary"
+            className="flex flex-col items-center justify-center overflow-x-clip bg-primary"
             layout>
             <AnimateSharedLayout>
                 <motion.div
-                    className="w-full origin-bottom bg-dark-900 pb-48"
+                    className="flex w-full origin-bottom flex-col items-center bg-dark-900 pb-48"
                     initial={{ scale: 1 }}
-                    animate={{ scale: contactVisible ? 0.8 : 1 }}>
+                    animate={{ scale: contactVisible ? 0.8 : 1 }}
+                    transition={{ duration: 0.75 }}>
                     <Intro />
                     {!contactVisible && <Navbar />}
                     <About />
