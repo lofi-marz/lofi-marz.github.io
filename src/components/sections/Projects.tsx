@@ -1,16 +1,12 @@
 import { FaChevronDown, FaChevronUp, FaGithub, FaLink } from 'react-icons/fa';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import {
-    AnimatePresence,
-    AnimateSharedLayout,
-    LayoutGroup,
-    motion,
-} from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { NavbarSpacer } from '../Navbar';
 import Image from 'next/image';
 import { WithChildrenProps } from '../../types';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { fadeIn, fadeInX } from '../../animations';
 
 export type ProjectMdxData = {
     source: SerializedProjectMdx;
@@ -105,6 +101,10 @@ function ProjectDescription({
     );
 }
 
+const leftVariants = fadeInX(-50);
+const rightVariants = fadeInX(50);
+const containerVariants = fadeIn();
+
 function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
     const techList = frontMatter.tech
         .split(',')
@@ -120,13 +120,15 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
                     'md:flex-row-reverse': rightAligned,
                 }
             )}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
+            variants={containerVariants}
             layout>
             <LayoutGroup>
                 <motion.div
                     className="flex items-center justify-center md:w-1/2"
+                    variants={rightAligned ? rightVariants : leftVariants}
                     layout>
                     <DesktopFrame className="md:w-full">
                         <img
@@ -144,7 +146,8 @@ function ProjectCard({ source, frontMatter, name, index }: ProjectCardProps) {
                         {
                             'md:items-end': !rightAligned,
                         }
-                    )}>
+                    )}
+                    variants={!rightAligned ? rightVariants : leftVariants}>
                     <motion.h1
                         layout
                         className={classNames('text-2xl font-bold lowercase', {
@@ -188,7 +191,7 @@ export function Projects({ projects }: ProjectsProps) {
         <motion.section
             id="projects"
             key="projects"
-            className="z-10 flex h-full min-h-screen w-full w-2/3 flex-col items-center justify-center p-10 dark:bg-zinc-900">
+            className="z-10 flex h-full min-h-screen w-full flex-col items-center justify-center p-10 dark:bg-zinc-900 lg:w-2/3">
             <NavbarSpacer></NavbarSpacer>
             <h1 className="mb-10 self-start border-l-8 border-primary pl-5 font-title text-6xl font-bold">
                 stuff I&apos;ve made

@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import { BackgroundSketch } from 'components/BackgroundSketch';
 import {
     AnimateSharedLayout,
+    LayoutGroup,
     motion,
     useTransform,
     useViewportScroll,
@@ -66,7 +67,7 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
         <motion.div
             className="flex flex-col items-center justify-center overflow-x-clip bg-primary"
             layout>
-            <AnimateSharedLayout>
+            <LayoutGroup>
                 <motion.div
                     className="flex w-full origin-bottom flex-col items-center bg-dark-900 pb-48"
                     initial={{ scale: 1 }}
@@ -84,7 +85,7 @@ const Home: NextPage<HomePageProps> = ({ projects }) => {
                     }}
                     onViewportLeave={() => setContactVisible(false)}
                 />
-            </AnimateSharedLayout>
+            </LayoutGroup>
         </motion.div>
     );
 };
