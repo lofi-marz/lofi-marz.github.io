@@ -30,22 +30,6 @@ export function Layout({ children }: LayoutProps) {
     }, []);
     */
 
-    //AnimatePresence doesn't actually work with children there, so no exit animations
-    return (
-        <div className="dark h-full min-h-screen w-full">
-            <div className="flex flex-col items-center justify-center">
-                <Head>
-                    <title>hi</title>
-                    <meta name="description" content="Omari's Portfolio" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
-
-                <main className="flex min-h-screen w-full grow flex-col bg-zinc-200 text-zinc-900 dark:bg-dark-900 dark:text-white">
-                    <AnimatePresence>
-                        <motion.div key="children">{children}</motion.div>
-                    </AnimatePresence>
-                </main>
-            </div>
-        </div>
-    );
+    //Layout doesn't actually do anything for now
+    return <motion.div key="children">{children}</motion.div>;
 }

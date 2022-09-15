@@ -18,7 +18,7 @@ export function About() {
     //[calc(100vh-4rem)]
     return (
         <section
-            className="flex h-screen w-full flex-col items-center justify-center lg:w-2/3"
+            className="flex h-screen w-full flex-col items-center justify-center lg:w-2/3 "
             id="about">
             <NavbarSpacer></NavbarSpacer>
             <div className="flex h-screen w-full flex-col-reverse md:flex-row">
@@ -32,13 +32,8 @@ export function About() {
                     }}
                     viewport={{ once: true }}
                     variants={fadeInLeftVariants}>
-                    <motion.h1
-                        className="z-10 my-10 self-start border-l-8 border-primary pl-5 font-title text-5xl font-bold"
-                        variants={fadeInLeftVariants}>
-                        about me
-                    </motion.h1>
                     <motion.div
-                        className="text-content prose mix-blend-difference dark:prose-invert dark:text-white"
+                        className="text-content prose text-dark-900"
                         variants={fadeInLeftVariants}>
                         Hi, I&apos;m Omari! I&apos;m a Front-End Developer from
                         England, currently studying at the

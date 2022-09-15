@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import {
     About,
     Contact,
+    IconLink,
     Intro,
     ProjectMdxData,
     Projects,
@@ -11,20 +12,23 @@ import { getAllProjectFilePaths } from '../utils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BackgroundSketch } from 'components/BackgroundSketch';
 import {
     AnimateSharedLayout,
     LayoutGroup,
     motion,
+    useAnimationControls,
     useTransform,
     useViewportScroll,
+    Variants,
 } from 'framer-motion';
 import classNames from 'classnames';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navbar } from 'components/Navbar';
 import path from 'path';
 import img from '/me.jpg';
+import { FaAt, FaBook, FaGithub, FaLinkedin } from 'react-icons/fa';
 type HomePageProps = {
     projects: ProjectMdxData[];
 };
@@ -60,33 +64,68 @@ function AnimatedBackgroundSketch({ animate }: AnimatedBackgroundSketchProps) {
     );
 }
 
+const loadingScreenVariants: Variants = {
+    visible: { width: '100%' },
+    hidden: { width: '100%', transition: { delay: 1, duration: 2 } },
+};
+
+type LoadingScreenProps = { onEnd: () => void };
+
+function LoadingScreen({ onEnd }: LoadingScreenProps) {
+    const controls = useAnimationControls();
+
+    useEffect(() => {
+        controls.start('hidden').then(() => onEnd());
+    }, []);
+
+    return (
+        <motion.div
+            className="fixed top-0 z-10 flex h-screen w-screen items-center justify-center bg-primary text-white"
+            initial="visible"
+            animate={controls}
+            layoutId="red-section"
+            variants={loadingScreenVariants}>
+            <motion.h1
+                layoutId="greeting"
+                className="font-title text-5xl font-bold">
+                hi!
+            </motion.h1>
+        </motion.div>
+    );
+}
+
 const Home: NextPage<HomePageProps> = ({ projects }) => {
     const isDesktop = useMediaQuery('lg');
     const [contactVisible, setContactVisible] = useState(false);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => console.log(loading), [loading]);
     return (
-        <motion.div
-            className="flex flex-col items-center justify-center overflow-x-clip bg-primary"
-            layout>
-            <LayoutGroup>
+        <>
+            {loading ? (
+                <LoadingScreen onEnd={() => setLoading(false)} />
+            ) : (
                 <motion.div
-                    className="flex w-full origin-bottom flex-col items-center bg-dark-900 pb-48"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: contactVisible ? 0.8 : 1 }}
-                    transition={{ duration: 0.75 }}>
-                    <Intro />
-                    {!contactVisible && <Navbar />}
-                    <About />
-                    <Projects projects={projects} />
+                    className="flex flex-col items-center justify-center overflow-x-clip bg-primary"
+                    layout>
+                    <LayoutGroup>
+                        <motion.div
+                            className="flex w-full origin-bottom flex-col items-center bg-stone-100 pb-48"
+                            initial={{ scale: 1 }}
+                            animate={{ scale: contactVisible ? 0.8 : 1 }}
+                            transition={{ duration: 0.75 }}>
+                            <Intro />
+                            <About />
+                        </motion.div>
+                        <Contact
+                            onViewportEnter={() => {
+                                setContactVisible(true);
+                            }}
+                            onViewportLeave={() => setContactVisible(false)}
+                        />
+                    </LayoutGroup>
                 </motion.div>
-                <Contact
-                    onViewportEnter={() => {
-                        console.log('Visible');
-                        setContactVisible(true);
-                    }}
-                    onViewportLeave={() => setContactVisible(false)}
-                />
-            </LayoutGroup>
-        </motion.div>
+            )}
+        </>
     );
 };
 
