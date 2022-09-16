@@ -44,7 +44,11 @@ export function Intro() {
     });
     scrollYProgress.onChange(console.log);
 
-    const width = useTransform(scrollYProgress, [0, 1], ['100%', '20%']);
+    const width = useTransform(
+        scrollYProgress,
+        [0, 0.5, 1],
+        ['100%', '100%', '20%']
+    );
     const lg = useMediaQuery('lg');
 
     const socials = [];
