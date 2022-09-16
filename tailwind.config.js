@@ -15,7 +15,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 title: ['Poppins', ...defaultTheme.fontFamily.sans],
-                text: ['Inter', ...defaultTheme.fontFamily.sans],
+                text: ['Manrope', ...defaultTheme.fontFamily.sans],
+                serif: ['IBM Plex Sans', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 primary: colors.red[500],

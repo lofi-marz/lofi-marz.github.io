@@ -2,6 +2,7 @@ import {
     AnimateSharedLayout,
     motion,
     useScroll,
+    useSpring,
     useTransform,
 } from 'framer-motion';
 import {
@@ -16,25 +17,13 @@ import {
     FaLinkedin,
 } from 'react-icons/fa';
 import { BackgroundSketch } from '../BackgroundSketch';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { AnimatedIconLink } from '../IconLink';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { SectionProps } from '../../types';
+import { SetSectionContext } from '../SectionContext';
 
-function Arrow() {
-    const { scrollYProgress } = useScroll();
-    const opacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
-    return (
-        <motion.a
-            href="#about"
-            animate={{ y: [0, 10, 0] }}
-            style={{ opacity }}
-            transition={{ repeat: Infinity }}>
-            <FaArrowUp />
-        </motion.a>
-    );
-}
-
-export function Intro() {
+export function Intro({ onViewportEnter }: SectionProps) {
     //[calc(100vh-4rem)]
     const [selectedSocial, setSelectedSocial] = useState(0);
     const ref = useRef(null);
@@ -42,42 +31,30 @@ export function Intro() {
         target: ref,
         offset: ['start start', 'end end'],
     });
-    scrollYProgress.onChange(console.log);
+    const setSection = useContext(SetSectionContext);
 
-    const width = useTransform(
-        scrollYProgress,
-        [0, 0.5, 1],
-        ['100%', '100%', '20%']
-    );
-    const lg = useMediaQuery('lg');
-
-    const socials = [];
+    scrollYProgress.onChange((y) => {
+        console.log(y);
+        if (y > 0.5) {
+            setSection('about');
+        } else {
+            setSection('intro');
+        }
+    });
     return (
-        <section className="h-[200vh] w-full" ref={ref}>
+        <motion.section
+            className="h-[150vh] w-full snap-center"
+            ref={ref}
+            onViewportEnter={onViewportEnter}
+            viewport={{ margin: '-10% 0% -10% 0%' }}>
             <motion.section
                 id="home"
-                className="sticky top-0 flex h-screen w-full flex-row items-center justify-start gap-2"
+                className="sticky bottom-0 flex h-screen w-full flex-row items-center justify-start gap-2"
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ ease: 'easeOut' }}
+                transition={{ ease: 'easeInOut' }}
                 viewport={{ once: true }}
                 layout>
-                <motion.div
-                    className="relative flex h-full items-center justify-center bg-primary py-10 text-3xl text-white sm:justify-end"
-                    style={{ width }}
-                    layoutId="red-section">
-                    <div className="flex flex-col gap-5 px-5 sm:px-10">
-                        <FaInstagram />
-                        <FaLinkedin />
-                        <FaAt />
-                        <FaGithub />
-                    </div>
-                    <div
-                        className="absolute bottom-10 flex rotate-180 flex-row items-center justify-center gap-2 px-10 text-xl"
-                        style={{ writingMode: 'vertical-rl' }}>
-                        {<Arrow />}
-                    </div>
-                </motion.div>
                 <motion.div
                     className="flex w-full flex-col items-start justify-center p-10 font-title text-5xl font-bold"
                     layoutId="greeting">
@@ -104,6 +81,6 @@ export function Intro() {
                     })}
                 </motion.span>
             </motion.section>
-        </section>
+        </motion.section>
     );
 }

@@ -10,11 +10,11 @@ type ContactProps = {
 export function Contact({ onViewportEnter, onViewportLeave }: ContactProps) {
     return (
         <motion.footer
-            className="flex flex-col gap-10 px-10 py-20"
+            className="flex flex-col gap-10 px-10 py-20 text-white"
             onViewportEnter={onViewportEnter}
             onViewportLeave={onViewportLeave}
             viewport={{ margin: '-800px 0px 0px 0px' }}>
-            <h1 className="mb-10 self-start border-l-8 border-dark-800 pl-5 font-title text-6xl font-bold">
+            <h1 className="mb-10 self-start border-l-8 border-dark-800 pl-5 font-title text-6xl font-bold ">
                 contact <br /> me
             </h1>
             <div className="mx-auto flex flex-col items-center justify-center gap-5 md:w-1/2">

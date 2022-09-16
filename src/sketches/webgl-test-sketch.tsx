@@ -239,8 +239,8 @@ export const WebGlTestSketch: React.FC = () => {
         //The modulo is because the start and end of hue are red
         //We want the end to avoid going through the whole colour wheel
         // |r oygbi v r| to go from v to r instead of r to v;
-        hue1 = p5.hue(colors.primary);
-        hue2 = p5.hue(colors.secondary);
+        hue2 = p5.hue(colors.primary);
+        hue1 = p5.hue(colors.secondary);
         if (hue1 > hue2) {
             const temp = hue1;
             hue1 = hue2;
@@ -292,7 +292,7 @@ export const WebGlTestSketch: React.FC = () => {
 
             //p5.box(2);
             //We don't actually need to render these with a lot of detail since they're so small
-            p5.sphere(2, 8, 8);
+            p5.sphere(4, 8, 8);
             //p5.translate(-v.x, -v.y, -v.z);
             p5.translate(-v.x, -v.y, -v.z);
         }

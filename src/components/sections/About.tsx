@@ -1,9 +1,18 @@
 import { motion } from 'framer-motion';
-import { FaAt, FaChevronDown, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { WithChildrenProps } from '../../types';
+import {
+    FaAt,
+    FaChevronDown,
+    FaGithub,
+    FaInstagram,
+    FaLinkedin,
+} from 'react-icons/fa';
+import { SectionProps, WithChildrenProps } from '../../types';
 import { IconLink } from '../IconLink';
 import { NavbarSpacer } from '../Navbar';
 import { fadeInLeftVariants } from '../../animations';
+import React from 'react';
+import { BackgroundSketch } from '../BackgroundSketch';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 function Chevron() {
     return <FaChevronDown className="absolute mt-20" />;
@@ -14,16 +23,43 @@ const imageVariants = {
     show: { opacity: 1 },
 };
 
-export function About() {
+export function About({ onViewportEnter }: SectionProps) {
     //[calc(100vh-4rem)]
     return (
-        <section
-            className="flex h-screen w-full flex-col items-center justify-center lg:w-2/3 "
+        <motion.section
+            onViewportEnter={onViewportEnter}
+            viewport={{ margin: '-10% 0% -10% 0%' }}
+            className="flex h-screen w-full snap-center flex-row items-center justify-center p-48"
             id="about">
-            <NavbarSpacer></NavbarSpacer>
-            <div className="flex h-screen w-full flex-col-reverse md:flex-row">
+            <div>
+                <h1 className="w-fit font-title text-5xl font-bold">
+                    <p className="relative z-10">about me</p>
+                    <div className="relative bottom-3 z-0 h-[1rem] w-4/5 bg-primary" />
+                </h1>
                 <motion.div
-                    className="flex flex-col items-center justify-center dark:bg-zinc-900 md:w-3/5 lg:h-screen"
+                    className="font-text text-2xl text-dark-900"
+                    variants={fadeInLeftVariants}>
+                    Hi, 👋 I&apos;m Omari! <br /> I&apos;m a Front-End Developer
+                    from England. <br />
+                    You can find me at the{' '}
+                    <a
+                        href="https://www.nottinghampost.com/news/nottingham-news/picture-shows-huge-gaggle-geese-3383819"
+                        className="link">
+                        University of Nottingham
+                    </a>
+                    {'. '}
+                    <br />I like making fun,{' '}
+                    <a
+                        className="link"
+                        href="https://p5js-experiments-gamma.vercel.app/">
+                        creative
+                    </a>{' '}
+                    things with code.
+                </motion.div>
+            </div>
+            <div className="flex w-full items-center md:h-full md:w-1/2">
+                <motion.div
+                    className="m-auto w-full max-w-sm border-l-8 border-primary pl-3 md:w-80 lg:w-96"
                     initial="hidden"
                     whileInView="show"
                     transition={{
@@ -31,61 +67,14 @@ export function About() {
                         staggerChildren: 0.5,
                     }}
                     viewport={{ once: true }}
-                    variants={fadeInLeftVariants}>
-                    <motion.div
-                        className="text-content prose text-dark-900"
-                        variants={fadeInLeftVariants}>
-                        Hi, I&apos;m Omari! I&apos;m a Front-End Developer from
-                        England, currently studying at the
-                        <a
-                            href="https://www.nottinghampost.com/news/nottingham-news/picture-shows-huge-gaggle-geese-3383819"
-                            className="link">
-                            {' '}
-                            University of Nottingham
-                        </a>
-                        {'. '}I like making fun,
-                        <a
-                            className="link"
-                            href="https://p5js-experiments-gamma.vercel.app/">
-                            {' '}
-                            creative{' '}
-                        </a>
-                        things with code.
-                        <p className="mx-auto w-fit">
-                            Feel free to contact me at any of these!
-                            <span className="mx-auto flex w-min gap-10 px-10 py-5">
-                                <IconLink href="https://github.com/lofi-marz/">
-                                    <FaGithub />
-                                </IconLink>
-                                <IconLink href="https://www.linkedin.com/in/omari-thompson-edwards-b7307b195/">
-                                    <FaLinkedin />
-                                </IconLink>
-                                <IconLink href="mailto:othompsonedwards@gmail.com">
-                                    <FaAt />
-                                </IconLink>
-                            </span>
-                        </p>
-                    </motion.div>
+                    variants={imageVariants}>
+                    <img
+                        className="saturate-0"
+                        src="me.jpg"
+                        alt="Picture of me"
+                    />
                 </motion.div>
-                <div className="flex w-full items-center md:h-full md:w-1/2">
-                    <motion.div
-                        className="m-auto w-full max-w-sm border-l-8 border-primary pl-3 md:w-80 lg:w-96"
-                        initial="hidden"
-                        whileInView="show"
-                        transition={{
-                            duration: 1,
-                            staggerChildren: 0.5,
-                        }}
-                        viewport={{ once: true }}
-                        variants={imageVariants}>
-                        <img
-                            className="saturate-0"
-                            src="me.jpg"
-                            alt="Picture of me"
-                        />
-                    </motion.div>
-                </div>
             </div>
-        </section>
+        </motion.section>
     );
 }

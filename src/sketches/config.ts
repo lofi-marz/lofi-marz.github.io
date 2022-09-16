@@ -7,5 +7,5 @@ export const sketchConfig = {
         h: 500,
     },
     radius: 220,
-    bg: '#18181b',
+    bg: '#f4f4f5',
 };

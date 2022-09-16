@@ -19,6 +19,7 @@ import {
     LayoutGroup,
     motion,
     useAnimationControls,
+    useScroll,
     useTransform,
     useViewportScroll,
     Variants,
@@ -28,7 +29,16 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navbar } from 'components/Navbar';
 import path from 'path';
 import img from '/me.jpg';
-import { FaAt, FaBook, FaGithub, FaLinkedin } from 'react-icons/fa';
+import {
+    FaArrowUp,
+    FaAt,
+    FaBook,
+    FaGithub,
+    FaInstagram,
+    FaLinkedin,
+} from 'react-icons/fa';
+import { Section } from '../types';
+import { SectionContextProvider } from '../components/SectionContext';
 type HomePageProps = {
     projects: ProjectMdxData[];
 };
@@ -94,38 +104,49 @@ function LoadingScreen({ onEnd }: LoadingScreenProps) {
     );
 }
 
+function Content() {
+    const [contactVisible, setContactVisible] = useState(false);
+    const [section, setSection] = useState<Section>('intro');
+    return (
+        <motion.div
+            className="flex snap-y flex-col items-center justify-center overflow-x-clip bg-primary"
+            layout>
+            <div className="flex w-full items-start justify-center">
+                <Navbar />
+                <motion.div
+                    className="flex w-full origin-bottom flex-col items-center justify-center bg-dark-50 pb-48"
+                    initial={{ scale: 1 }}
+                    animate={{ scale: contactVisible ? 0.8 : 1 }}
+                    transition={{ duration: 0.75 }}
+                    layout>
+                    <Intro onViewportEnter={() => setSection('intro')} />
+                    <About onViewportEnter={() => setSection('about')} />
+                </motion.div>
+            </div>
+
+            <Contact
+                onViewportEnter={() => {
+                    setContactVisible(false);
+                }}
+                onViewportLeave={() => setContactVisible(false)}
+            />
+        </motion.div>
+    );
+}
+
 const Home: NextPage<HomePageProps> = ({ projects }) => {
     const isDesktop = useMediaQuery('lg');
-    const [contactVisible, setContactVisible] = useState(false);
+
     const [loading, setLoading] = useState(true);
     useEffect(() => console.log(loading), [loading]);
     return (
-        <>
+        <SectionContextProvider>
             {loading ? (
                 <LoadingScreen onEnd={() => setLoading(false)} />
             ) : (
-                <motion.div
-                    className="flex flex-col items-center justify-center overflow-x-clip bg-primary"
-                    layout>
-                    <LayoutGroup>
-                        <motion.div
-                            className="flex w-full origin-bottom flex-col items-center bg-stone-100 pb-48"
-                            initial={{ scale: 1 }}
-                            animate={{ scale: contactVisible ? 0.8 : 1 }}
-                            transition={{ duration: 0.75 }}>
-                            <Intro />
-                            <About />
-                        </motion.div>
-                        <Contact
-                            onViewportEnter={() => {
-                                setContactVisible(true);
-                            }}
-                            onViewportLeave={() => setContactVisible(false)}
-                        />
-                    </LayoutGroup>
-                </motion.div>
+                <Content />
             )}
-        </>
+        </SectionContextProvider>
     );
 };
 

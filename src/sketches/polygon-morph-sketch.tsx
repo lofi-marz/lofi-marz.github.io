@@ -60,7 +60,7 @@ export const PolygonMorphSketch: React.FC = () => {
             sketchConfig.resolution.w,
             sketchConfig.resolution.h
         ).parent(canvasParentRef);
-        bg = p5.color(sketchConfig.bg);
+        bg = p5.color(colors.dark[50]);
     };
 
     const draw = (p5: P5) => {
@@ -117,7 +117,7 @@ export const PolygonMorphSketch: React.FC = () => {
                 progress
             );*/
 
-            const color = p5.lerpColor(
+            const color = p5.color(colors.primary); /*p5.lerpColor(
                 p5.color(colors.primary),
                 p5.color(colors.secondary),
                 (Math.sin(
@@ -132,7 +132,7 @@ export const PolygonMorphSketch: React.FC = () => {
                 ) +
                     1) /
                     2
-            );
+            );*/
             p5.stroke(color);
 
             /*const currHue = p5.color(p5.map(currSides, 0, 10, 0, 255), 200, 200);
