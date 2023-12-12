@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Section, WithChildrenProps } from '../types';
 import classNames from 'classnames';
 import {
+    FaArrowDown,
     FaArrowUp,
     FaAt,
     FaGithub,
@@ -44,6 +45,7 @@ function NavItem({ href, children, target, className }: NavItemProps) {
 export function NavbarSpacer() {
     return <div className="h-16 w-full"></div>;
 }
+
 
 function Arrow() {
     const { scrollYProgress } = useScroll();
